@@ -1,0 +1,125 @@
+.wc-coupon-generator-wrap {
+
+
+	/** Steps */
+	&.wc-coupon-generator-wrap {
+
+		.steps {
+
+			.step {
+				background: #999;
+				padding: 10px 20px;
+				color: white;
+				width: calc( ( 100% - ( 68px * 4 ) ) / 4 );
+				display:inline-block;
+				margin-right: 20px;
+				margin-left: 0px;
+				font-weight: bold;
+				font-size: 14px;
+				white-space: nowrap;
+
+				a {
+					color: white;
+					text-decoration: none;
+
+				}
+				&.active {
+					background: #e33a3d;
+					border-left-color: #e33a3d;
+				}
+
+				// Step arrows (left and right)
+				&:after {
+				    content: "";
+				    width: 0px;
+					height: 0px;
+					border-top: 20px solid rgba(0, 0, 0, 0);
+					border-bottom: 20px solid rgba(0, 0, 0, 0);
+					border-left: 20px solid #999;
+					float: right;
+					position: relative;
+					margin: -10px -40px;
+				}
+				&:before {
+				    content: "";
+				    width: 0px;
+					height: 0px;
+					border-top: 20px solid #999;
+					border-bottom: 20px solid #999;
+					border-left: 20px solid rgba(0, 0, 0, 0);
+					float: left;
+					position: relative;
+				    margin: -10px -40px;
+				}
+				&.active:after {
+					border-left-color: #e33a3d;
+				}
+				&.active:before {
+					border-top-color: #e33a3d;
+					border-bottom-color: #e33a3d;
+				}
+			}
+			.step.step-0 {
+				margin-left: 20px;
+			}
+		}
+
+
+		.continue-button-wrap {
+			float: right;
+
+			.continue-button {
+				background: #E33A3D;  border: none;  color: #FFF;  padding: 10px 30px;
+				height: 18px;
+				line-height: 18px;
+				position: relative;
+				display: inline-block;
+				margin-left: 20px;
+				margin-right: 20px;
+				font-weight: bold;
+				font-size: 14px;
+
+				&:after {
+					content: "";
+					width: 0px;
+					height: 0px;
+					border-top: 19px solid rgba(0, 0, 0, 0);
+					border-bottom: 19px solid rgba(0, 0, 0, 0);
+					border-left: 19px solid #E33A3D;
+					position: relative;
+					float: right;
+					margin: -10px -49px;
+					padding: 0px;
+					line-height: 0;
+				}
+				&:before {
+					content: "";
+					width: 0px;
+					height: 0px;
+					border-top: 19px solid #E33A3D;
+					border-bottom: 19px solid #E33A3D;
+					border-left: 19px solid rgba(0, 0, 0, 0);
+					float: left;
+					position: relative;
+					margin: 0;
+					margin: -10px -49px;
+				}
+			}
+		}
+	}
+
+	/* Step specific */
+	&.wc-coupon-generator-wrap-step-2 {
+
+		#woocommerce-coupon-generator-options {
+			float: left;
+			width: 80%;
+
+			.inside {
+				padding: 0;
+				margin: 0;
+			}
+		}
+	}
+
+}

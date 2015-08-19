@@ -1,0 +1,91 @@
+.wc-coupon-generator-wrap {
+  /** Steps */
+  /* Step specific */ }
+  .wc-coupon-generator-wrap.wc-coupon-generator-wrap .steps .step {
+    background: #999;
+    padding: 10px 20px;
+    color: white;
+    width: calc( ( 100% - ( 68px * 4 ) ) / 4 );
+    display: inline-block;
+    margin-right: 20px;
+    margin-left: 0px;
+    font-weight: bold;
+    font-size: 14px;
+    white-space: nowrap; }
+    .wc-coupon-generator-wrap.wc-coupon-generator-wrap .steps .step a {
+      color: white;
+      text-decoration: none; }
+    .wc-coupon-generator-wrap.wc-coupon-generator-wrap .steps .step.active {
+      background: #e33a3d;
+      border-left-color: #e33a3d; }
+    .wc-coupon-generator-wrap.wc-coupon-generator-wrap .steps .step:after {
+      content: "";
+      width: 0px;
+      height: 0px;
+      border-top: 20px solid transparent;
+      border-bottom: 20px solid transparent;
+      border-left: 20px solid #999;
+      float: right;
+      position: relative;
+      margin: -10px -40px; }
+    .wc-coupon-generator-wrap.wc-coupon-generator-wrap .steps .step:before {
+      content: "";
+      width: 0px;
+      height: 0px;
+      border-top: 20px solid #999;
+      border-bottom: 20px solid #999;
+      border-left: 20px solid transparent;
+      float: left;
+      position: relative;
+      margin: -10px -40px; }
+    .wc-coupon-generator-wrap.wc-coupon-generator-wrap .steps .step.active:after {
+      border-left-color: #e33a3d; }
+    .wc-coupon-generator-wrap.wc-coupon-generator-wrap .steps .step.active:before {
+      border-top-color: #e33a3d;
+      border-bottom-color: #e33a3d; }
+  .wc-coupon-generator-wrap.wc-coupon-generator-wrap .steps .step.step-0 {
+    margin-left: 20px; }
+  .wc-coupon-generator-wrap.wc-coupon-generator-wrap .continue-button-wrap {
+    float: right; }
+    .wc-coupon-generator-wrap.wc-coupon-generator-wrap .continue-button-wrap .continue-button {
+      background: #E33A3D;
+      border: none;
+      color: #FFF;
+      padding: 10px 30px;
+      height: 18px;
+      line-height: 18px;
+      position: relative;
+      display: inline-block;
+      margin-left: 20px;
+      margin-right: 20px;
+      font-weight: bold;
+      font-size: 14px; }
+      .wc-coupon-generator-wrap.wc-coupon-generator-wrap .continue-button-wrap .continue-button:after {
+        content: "";
+        width: 0px;
+        height: 0px;
+        border-top: 19px solid transparent;
+        border-bottom: 19px solid transparent;
+        border-left: 19px solid #E33A3D;
+        position: relative;
+        float: right;
+        margin: -10px -49px;
+        padding: 0px;
+        line-height: 0; }
+      .wc-coupon-generator-wrap.wc-coupon-generator-wrap .continue-button-wrap .continue-button:before {
+        content: "";
+        width: 0px;
+        height: 0px;
+        border-top: 19px solid #E33A3D;
+        border-bottom: 19px solid #E33A3D;
+        border-left: 19px solid transparent;
+        float: left;
+        position: relative;
+        margin: 0;
+        margin: -10px -49px; }
+  .wc-coupon-generator-wrap.wc-coupon-generator-wrap-step-2 #woocommerce-coupon-generator-options {
+    float: left;
+    width: 80%; }
+    .wc-coupon-generator-wrap.wc-coupon-generator-wrap-step-2 #woocommerce-coupon-generator-options .inside {
+      padding: 0;
+      margin: 0; }
