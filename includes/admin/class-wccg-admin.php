@@ -52,10 +52,6 @@ class WCCG_Admin {
 
 			wp_enqueue_script( 'woocommerce-coupon-generator', plugins_url( 'assets/js/woocommerce-coupon-generator-admin.js', WooCommerce_Coupon_Generator()->file ), array( 'jquery' ), WooCommerce_Coupon_Generator()->version, true );
 
-			wp_localize_script( 'woocommerce-coupon-generator', 'wccg', array(
-				'nonce'	=> wp_create_nonce( 'wccg_generate_coupons' ),
-			) );
-
 			wp_enqueue_script( 'wc-admin-meta-boxes' );
 			wp_enqueue_script( 'wc-admin-coupon-meta-boxes' );
 

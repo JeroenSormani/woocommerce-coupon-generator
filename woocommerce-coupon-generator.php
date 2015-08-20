@@ -98,6 +98,10 @@ class WooCommerce_Coupon_Generator {
 
 		if ( is_admin() ) :
 
+			// Functions
+			require_once plugin_dir_path( __FILE__ ) . 'includes/admin/wccg-core-functions.php';
+
+			// Classes
 			require_once plugin_dir_path( __FILE__ ) . 'includes/admin/class-wccg-admin.php';
 			$this->admin = new WCCG_Admin();
 

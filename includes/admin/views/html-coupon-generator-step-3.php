@@ -35,8 +35,6 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 							<div id="coupon_options" class="panel-wrap">
 								<div class="panel woocommerce_options_panel" style="display: block;">
 
-									Processing coupons....<br/>
-
 									<div class='wc-coupon-generator-progress-bar-wrap'>
 										<div class="wc-coupon-generator-progress-bar">
 											<span class="progress"></span>
@@ -45,35 +43,33 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 										<span class="spinner is-active"></span>
 									</div>
 
-<script>
-jQuery( document ).ready( function( $ ) {
-	WCCG_Generator.init();
-});
+									<!-- Messages -->
+									<div class='wc-coupon-generator-progress-messages-wrap'>
+										<pre class='wc-coupon-generator-progress-messages'></pre>
+									</div>
 
-</script>
+									<script>
+									jQuery( document ).ready( function( $ ) {
+										WCCG_Generator.init();
+									});
+
+									</script>
 
 									<form id='wc-coupon-generator-form'><?php
+										// Keep existing post values
+										foreach ( $_POST as $key => $val ) :
 
-									// Keep existing post values
-									foreach ( $_POST as $key => $val ) :
+											if ( is_array( $val ) ) :
+												foreach( $val as $inner_val ) :
+													?><input type="hidden" name="<?php echo esc_attr( $key ); ?>[]" value="<?php echo esc_attr( $inner_val ); ?>" /><?php
+												endforeach;
+											else :
+												?><input type="hidden" name="<?php echo esc_attr( $key ); ?>" value="<?php echo esc_attr( $val ); ?>" /><?php
+											endif;
 
-										if ( is_array( $val ) ) :
-											foreach( $val as $inner_val ) :
-												?><input type="hidden" name="<?php echo esc_attr( $key ); ?>[]" value="<?php echo esc_attr( $inner_val ); ?>" /><?php
-											endforeach;
-										else :
-											?><input type="hidden" name="<?php echo esc_attr( $key ); ?>" value="<?php echo esc_attr( $val ); ?>" /><?php
-										endif;
-
-									endforeach;
-
+										endforeach;
 									?></form>
 
-									<a href='javascript:void(0);' id='wc-coupon-generator-start' class='button button-primary'><?php
-										_e( 'Start generating', 'woocommerce-coupon-generator' );
-									?></a>
-									<?php echo $_POST['number_of_coupons'] . ' created in ' . $time . ' seconds'; ?><br/>
-									<?php echo $_POST['number_of_coupons'] . ' created in ' . $time_time . ' seconds'; ?><br/>
 
 								</div><!-- .woocommerce_options_panel -->
 								<div class="clear"></div>
@@ -86,8 +82,6 @@ jQuery( document ).ready( function( $ ) {
 		</div>
 
 		<div class='clear'></div>
-
-
 
 	</div>
 
