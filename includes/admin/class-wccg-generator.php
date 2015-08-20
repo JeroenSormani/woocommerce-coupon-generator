@@ -29,6 +29,10 @@ class WCCG_Generator {
 	 * @since 1.0.0
 	 */
 	public function __construct() {
+			error_log( 'init' );
+		add_action( 'wp_ajax_wccg_generate_coupons', function() {
+			error_log( 'ajax' );
+		});
 
 		$this->steps = array(
 			'0'	=> array(
@@ -154,7 +158,6 @@ $time_time = time() - $start_time;
 
 		// Verify nonce
 		if ( ! isset( $_POST['generate_coupons_nonce'] ) || ! wp_verify_nonce( $_POST['generate_coupons_nonce'], 'wccg_generate_coupons' ) ) :
-		error_log( 'return' );
 			return;
 		endif;
 
@@ -164,9 +167,11 @@ $time_time = time() - $start_time;
 		endif;
 
 		global $wpdb;
+		$insert_coupon_ids = array();
 
 		$wpdb->query( 'START TRANSACTION' );
 
+		// Query coupons
 		$number_of_coupons = absint( $_POST['number_of_coupons'] );
 		for ( $i = 0; $i < $number_of_coupons; $i++ ) :
 
@@ -195,62 +200,57 @@ $time_time = time() - $start_time;
 				current_time( 'mysql', 1 )
 			) );
 
+			$insert_coupon_ids[] = $wpdb->insert_id;
 			$coupon_id = $wpdb->insert_id;
 
 			// Set GUID
-			$wpdb->query( $wpdb->prepare( "UPDATE $wpdb->posts SET guid=%s WHERE ID=%d", get_permalink( $coupon_id ), $coupon_id ) );
+// 			$wpdb->query( $wpdb->prepare( "UPDATE $wpdb->posts SET guid=%s WHERE ID=%d", get_permalink( $coupon_id ), $coupon_id ) ); // Slow
+			$wpdb->query( $wpdb->prepare( "UPDATE $wpdb->posts SET guid=%s WHERE ID=%d", esc_url_raw( add_query_arg( array( 'post_type' => 'shop_coupon', 'p' => $coupon_id ), home_url() ) ), $coupon_id ) ); // 10% faster -1 query per coupon
 
-			// Add/Replace data to array
-			$meta_array = apply_filters( 'woocommerce_coupon_generator_coupon_meta_data', array(
-				'discount_type'  => empty( $_POST['discount_type'] ) ? 'fixed_cart' : wc_clean( $_POST['discount_type'] ),
-				'coupon_amount'  => wc_format_decimal( $_POST['coupon_amount'] ),
-				'individual_use'  => isset( $_POST['individual_use'] ) ? 'yes' : 'no',
-				'product_ids'  => implode( ',', array_filter( array_map( 'intval', explode( ',', $_POST['product_ids'] ) ) ) ),
-				'exclude_product_ids'  => implode( ',', array_filter( array_map( 'intval', explode( ',', $_POST['exclude_product_ids'] ) ) ) ),
-				'usage_limit'  => empty( $_POST['usage_limit'] ) ? '' : absint( $_POST['usage_limit'] ),
-				'usage_limit_per_user'  => empty( $_POST['usage_limit_per_user'] ) ? '' : absint( $_POST['usage_limit_per_user'] ),
-				'limit_usage_to_x_items'  => empty( $_POST['limit_usage_to_x_items'] ) ? '' : absint( $_POST['limit_usage_to_x_items'] ),
-				'expiry_date'  => wc_clean( $_POST['expiry_date'] ),
-				'free_shipping'  => isset( $_POST['free_shipping'] ) ? 'yes' : 'no',
-				'exclude_sale_items'  => isset( $_POST['exclude_sale_items'] ) ? 'yes' : 'no',
-				'product_categories'  => isset( $_POST['product_categories'] ) ? array_map( 'intval', $_POST['product_categories'] ) : array(),
-				'exclude_product_categories'  => isset( $_POST['exclude_product_categories'] ) ? array_map( 'intval', $_POST['exclude_product_categories'] ) : array(),
-				'minimum_amount'  => wc_format_decimal( $_POST['minimum_amount'] ),
-				'maximum_amount'  => wc_format_decimal( $_POST['maximum_amount'] ),
-				'customer_email'  => array_filter( array_map( 'trim', explode( ',', wc_clean( $_POST['customer_email'] ) ) ) ),
-			), $coupon_id );
+		endfor;
 
-			$insert_values = '';
-			// Insert all meta
-			foreach ( $meta_array as $key => $value ) :
+
+		// Add/Replace data to array
+		$meta_array = apply_filters( 'woocommerce_coupon_generator_coupon_meta_data', array(
+			'discount_type'  => empty( $_POST['discount_type'] ) ? 'fixed_cart' : wc_clean( $_POST['discount_type'] ),
+			'coupon_amount'  => wc_format_decimal( $_POST['coupon_amount'] ),
+			'individual_use'  => isset( $_POST['individual_use'] ) ? 'yes' : 'no',
+			'product_ids'  => implode( ',', array_filter( array_map( 'intval', explode( ',', $_POST['product_ids'] ) ) ) ),
+			'exclude_product_ids'  => implode( ',', array_filter( array_map( 'intval', explode( ',', $_POST['exclude_product_ids'] ) ) ) ),
+			'usage_limit'  => empty( $_POST['usage_limit'] ) ? '' : absint( $_POST['usage_limit'] ),
+			'usage_limit_per_user'  => empty( $_POST['usage_limit_per_user'] ) ? '' : absint( $_POST['usage_limit_per_user'] ),
+			'limit_usage_to_x_items'  => empty( $_POST['limit_usage_to_x_items'] ) ? '' : absint( $_POST['limit_usage_to_x_items'] ),
+			'expiry_date'  => wc_clean( $_POST['expiry_date'] ),
+			'free_shipping'  => isset( $_POST['free_shipping'] ) ? 'yes' : 'no',
+			'exclude_sale_items'  => isset( $_POST['exclude_sale_items'] ) ? 'yes' : 'no',
+			'product_categories'  => isset( $_POST['product_categories'] ) ? array_map( 'intval', $_POST['product_categories'] ) : array(),
+			'exclude_product_categories'  => isset( $_POST['exclude_product_categories'] ) ? array_map( 'intval', $_POST['exclude_product_categories'] ) : array(),
+			'minimum_amount'  => wc_format_decimal( $_POST['minimum_amount'] ),
+			'maximum_amount'  => wc_format_decimal( $_POST['maximum_amount'] ),
+			'customer_email'  => array_filter( array_map( 'trim', explode( ',', wc_clean( $_POST['customer_email'] ) ) ) ),
+		), $coupon_id );
+
+
+		$insert_values = '';
+		// Insert all coupons meta
+		foreach ( $meta_array as $key => $value ) :
+
+			foreach ( $insert_coupon_ids as $coupon_id ) :
 
 				$insert_values .= $wpdb->prepare( "(%d, %s, %s)", $coupon_id, sanitize_title( wp_unslash( $key ) ), maybe_serialize( wp_unslash( $value ) ) );
 
 				$meta_array_keys = array_keys( $meta_array );
-				if ( $key != end( $meta_array_keys ) ) :
-					$insert_values .= ", ";
-				else :
+				if ( $key == end( $meta_array_keys ) && $coupon_id == end( $insert_coupon_ids ) ) :
 					$insert_values .= ";";
+				else :
+					$insert_values .= ", ";
 				endif;
-
-/* - Old way, about 30% slower
-				$wpdb->query( $wpdb->prepare( "INSERT INTO $wpdb->postmeta
-					(post_id, meta_key, meta_value)
-					post_id=%d,
-					meta_key=%s,
-					meta_value=%s
-					",
-					$coupon_id,
-					sanitize_title( wp_unslash( $key ) ),
-					maybe_serialize( wp_unslash( $value ) )
-				) );
-*/
 
 			endforeach;
 
-			$wpdb->query( "INSERT INTO $wpdb->postmeta (post_id, meta_key, meta_value) VALUES $insert_values", $insert_values );
+		endforeach;
 
-		endfor;
+		$wpdb->query( "INSERT INTO $wpdb->postmeta (post_id, meta_key, meta_value) VALUES $insert_values", $insert_values );
 
 		$wpdb->query( 'COMMIT' );
 

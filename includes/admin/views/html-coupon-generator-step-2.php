@@ -40,7 +40,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 										<p class="form-field number_of_coupons ">
 											<label for="number_of_coupons"><?php _e( 'Number of coupons', 'woocommerce-coupon-generator' ); ?></label>
-											<input type="number" min="0" class="short" style="width: 200px;" name="number_of_coupons" id="coupon_amount" value="" placeholder="10">
+											<input type="number" min="1" autofocus class="short" style="width: 200px;" name="number_of_coupons" id="coupon_amount" value="1" placeholder="10">
 											<img class="help_tip" data-tip='<?php _e( 'Number of coupons to generate in this batch', 'woocommerce-coupon-generator' ) ?>' src="<?php echo WC()->plugin_url(); ?>/assets/images/help.png" height="16" width="16" />
 										</p>
 

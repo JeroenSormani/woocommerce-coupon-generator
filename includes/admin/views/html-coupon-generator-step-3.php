@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 			<div id="postbox-container-2" class="postbox-container">
 				<div id="normal-sortables" class="meta-box-sortables ui-sortable">
-					<div id="woocommerce-coupon-generator-options" class="postbox ">
+					<div id="wc-coupon-generator-options" class="postbox ">
 						<h3 class="hndle ui-sortable-handle"><span><?php _e( 'Generating coupons', 'woocommerce-coupon-generator' ); ?></span></h3>
 						<div class="inside">
 
@@ -36,6 +36,42 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 								<div class="panel woocommerce_options_panel" style="display: block;">
 
 									Processing coupons....<br/>
+
+									<div class='wc-coupon-generator-progress-bar-wrap'>
+										<div class="wc-coupon-generator-progress-bar">
+											<span class="progress"></span>
+											<div class="wc-coupon-generator-progress-percentage">0%</div>
+										</div>
+										<span class="spinner is-active"></span>
+									</div>
+
+<script>
+jQuery( document ).ready( function( $ ) {
+	WCCG_Generator.init();
+});
+
+</script>
+
+									<form id='wc-coupon-generator-form'><?php
+
+									// Keep existing post values
+									foreach ( $_POST as $key => $val ) :
+
+										if ( is_array( $val ) ) :
+											foreach( $val as $inner_val ) :
+												?><input type="hidden" name="<?php echo esc_attr( $key ); ?>[]" value="<?php echo esc_attr( $inner_val ); ?>" /><?php
+											endforeach;
+										else :
+											?><input type="hidden" name="<?php echo esc_attr( $key ); ?>" value="<?php echo esc_attr( $val ); ?>" /><?php
+										endif;
+
+									endforeach;
+
+									?></form>
+
+									<a href='javascript:void(0);' id='wc-coupon-generator-start' class='button button-primary'><?php
+										_e( 'Start generating', 'woocommerce-coupon-generator' );
+									?></a>
 									<?php echo $_POST['number_of_coupons'] . ' created in ' . $time . ' seconds'; ?><br/>
 									<?php echo $_POST['number_of_coupons'] . ' created in ' . $time_time . ' seconds'; ?><br/>
 

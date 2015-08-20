@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 			<span class='step step-3'><?php _e( '3. Generating coupons', 'woocommerce-coupon-generator' ); ?></span>
 		</div>
 
-		<form method='post' id='woocommerce-coupon-generator' action='<?php echo esc_url( add_query_arg( 'step', 2 ) ); ?>'>
+		<form method='post' id='wc-coupon-generator' action='<?php echo esc_url( add_query_arg( 'step', 2 ) ); ?>'>
 			<div class='wc-coupon-generator-coupon-data' id='poststuff'>
 
 				<div id="postbox-container-2" class="postbox-container">
@@ -50,7 +50,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 				</div>
 				<div class='clear'></div>
 
-				<a href="javascript:void(0);" class="continue-button-wrap" onclick="document.getElementById('woocommerce-coupon-generator').submit();">
+				<a href="javascript:void(0);" class="continue-button-wrap" onclick="document.getElementById('wc-coupon-generator').submit();">
 					<span class="continue-button"><?php _e( 'Continue to the next step', 'woocommerce-coupon-generator' ); ?></span>
 				</a>
 
