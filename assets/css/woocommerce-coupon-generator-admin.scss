@@ -7,7 +7,7 @@
 		.steps {
 
 			.step {
-				background: #999;
+				background: #8b8e94;
 				padding: 10px 20px;
 				color: white;
 				width: calc( ( 100% - ( 68px * 4 ) ) / 4 );
@@ -22,6 +22,8 @@
 					color: white;
 					text-decoration: none;
 
+					&:focus { box-shadow: none; }
+
 				}
 				&.active {
 					background: #e33a3d;
@@ -35,7 +37,7 @@
 					height: 0px;
 					border-top: 20px solid rgba(0, 0, 0, 0);
 					border-bottom: 20px solid rgba(0, 0, 0, 0);
-					border-left: 20px solid #999;
+					border-left: 20px solid #8b8e94;
 					float: right;
 					position: relative;
 					margin: -10px -40px;
@@ -44,8 +46,8 @@
 				    content: "";
 				    width: 0px;
 					height: 0px;
-					border-top: 20px solid #999;
-					border-bottom: 20px solid #999;
+					border-top: 20px solid #8b8e94;
+					border-bottom: 20px solid #8b8e94;
 					border-left: 20px solid rgba(0, 0, 0, 0);
 					float: left;
 					position: relative;
@@ -131,7 +133,7 @@
 
 		/** Progress bar */
 		.wc-coupon-generator-progress-bar {
-			width: calc( 100% - 100px );
+			width: calc( 100% - 50px );
 			height: 30px;
 			border: 1px solid #DDD;
 			position: relative;
@@ -151,9 +153,21 @@
 				background-color: rgba(227, 58, 61, 0.5);
 				position: absolute;
 				z-index: 5;
+				-webkit-transition: width 1s ease-in-out;
+				-moz-transition: width 1s ease-in-out;
+				-o-transition: width 1s ease-in-out;
+				transition: width 1s ease-in-out;
 			}
 		}
 		.spinner { float: none; }
+
+		pre.wc-coupon-generator-progress-messages {
+			background: #F5F5F5;
+			padding: 12px;
+			max-height: 300px;
+			overflow: scroll;
+		}
+
 	}
 
 }

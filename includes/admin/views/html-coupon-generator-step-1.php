@@ -31,7 +31,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 				<div id="postbox-container-2" class="postbox-container">
 					<div id="normal-sortables" class="meta-box-sortables ui-sortable">
 						<div id="woocommerce-coupon-data" class="postbox ">
-							<h3 class="hndle ui-sortable-handle"><span>Coupon Data</span></h3>
+							<h3 class="hndle ui-sortable-handle"><span><?php _e( 'Coupon Data', 'woocommerce' ); ?></span></h3>
 							<div class="inside"><?php
 
 								$temp_coupon = wp_insert_post( array(
