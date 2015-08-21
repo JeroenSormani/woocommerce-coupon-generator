@@ -37,8 +37,10 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 									<div class='wc-coupon-generator-progress-bar-wrap'>
 										<div class="wc-coupon-generator-progress-bar">
-											<span class="progress"></span>
 											<div class="wc-coupon-generator-progress-percentage">0%</div>
+											<span class="progress">
+												<span class='inner-progress wc-coupon-generator-progress-percentage'>0%</span>
+											</span>
 										</div>
 										<span class="spinner is-active"></span>
 									</div>
