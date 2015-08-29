@@ -95,6 +95,16 @@ class WooCommerce_Coupon_Generator {
 	 */
 	public function init() {
 
+		// Check if WooCommerce is active
+		if ( ! function_exists( 'is_plugin_active_for_network' ) ) :
+			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+		endif;
+
+		if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) :
+			if ( ! is_plugin_active_for_network( 'woocommerce/woocommerce.php' ) ) :
+				return;
+			endif;
+		endif;
 
 		if ( is_admin() ) :
 
