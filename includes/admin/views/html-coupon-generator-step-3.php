@@ -53,7 +53,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 									<script>
 									jQuery( document ).ready( function( $ ) {
 										WCCG_Generator.init();
-									});
+									} );
 
 									</script>
 
@@ -62,7 +62,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 										foreach ( $_POST as $key => $val ) :
 
 											if ( is_array( $val ) ) :
-												foreach( $val as $inner_val ) :
+												foreach ( $val as $inner_val ) :
 													?><input type="hidden" name="<?php echo esc_attr( $key ); ?>[]" value="<?php echo esc_attr( $inner_val ); ?>" /><?php
 												endforeach;
 											else :

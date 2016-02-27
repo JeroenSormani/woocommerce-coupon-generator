@@ -41,7 +41,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 										<p class="form-field number_of_coupons ">
 											<label for="number_of_coupons"><?php _e( 'Number of coupons', 'woocommerce-coupon-generator' ); ?></label>
 											<input type="number" min="1" autofocus class="short" style="width: 200px;" name="number_of_coupons" id="coupon_amount" value="1" placeholder="10">
-											<img class="help_tip" data-tip='<?php _e( 'Number of coupons to generate in this batch', 'woocommerce-coupon-generator' ) ?>' src="<?php echo WC()->plugin_url(); ?>/assets/images/help.png" height="16" width="16" />
+											<img class="help_tip" data-tip='<?php _e( 'Number of coupons to generate in this batch', 'woocommerce-coupon-generator' ); ?>' src="<?php echo WC()->plugin_url(); ?>/assets/images/help.png" height="16" width="16" />
 										</p>
 
 									</div><!-- .woocommerce_options_panel -->
@@ -64,7 +64,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 			foreach ( $_POST as $key => $val ) :
 
 				if ( is_array( $val ) ) :
-					foreach( $val as $inner_val ) :
+					foreach ( $val as $inner_val ) :
 						?><input type="hidden" name="<?php echo esc_attr( $key ); ?>[]" value="<?php echo esc_attr( $inner_val ); ?>" /><?php
 					endforeach;
 				else :
