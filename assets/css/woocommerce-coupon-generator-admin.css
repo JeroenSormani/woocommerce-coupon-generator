@@ -142,7 +142,8 @@
           -o-transition: none;
           transition: none; }
     .wc-coupon-generator-wrap.wc-coupon-generator-wrap-step-3 .spinner {
-      float: right; }
+      float: right;
+      margin: 5px 10px; }
     .wc-coupon-generator-wrap.wc-coupon-generator-wrap-step-3 pre.wc-coupon-generator-progress-messages {
       background: #F5F5F5;
       padding: 12px;

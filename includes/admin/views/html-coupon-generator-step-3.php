@@ -54,7 +54,6 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 									jQuery( document ).ready( function( $ ) {
 										WCCG_Generator.init();
 									});
-
 									</script>
 
 									<form id='wc-coupon-generator-form'><?php

@@ -36,7 +36,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 					<span class='description'><?php _e( 'Here you can set the coupon settings you\'re used to set in the default WooCommerce coupon settings.', 'woocommerce-coupon-generator' ); ?></span>
 				</li>
 				<li><?php _e( '2. Generator settings', 'woocommerce-coupon-generator' ); ?>&nbsp;
-					<span class='description'><?php _e( 'Set options like the amount of coupons you want to generate, the coupon format etc.', 'woocommerce-coupon-generator' ); ?></span>
+					<span class='description'><?php _e( 'Set options like the amount of coupons you want to generate.', 'woocommerce-coupon-generator' ); ?></span>
 				</li>
 				<li><?php _e( '3. Generating coupons', 'woocommerce-coupon-generator' ); ?>&nbsp;
 					<span class='description'><?php _e( 'This is the step where the coupons are actually generated.', 'woocommerce-coupon-generator' ); ?></span>

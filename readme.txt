@@ -1,5 +1,5 @@
-=== WooCommerce Coupon Generator ===
-Contributors: sormano
+=== Coupon Generator for WooCommerce ===
+Contributors: sormano, shopplugins
 Donate link: http://jeroensormani.com/donate/
 Tags: woocommerce coupon generator, woocommerce, woocommerce coupon, coupons, coupon importer, woocommerce automatic coupons, woocommerce random coupons
 Requires at least: 3.8
@@ -15,19 +15,19 @@ WooCommerce Coupon Generator is a coupon generator that allows you to setup and 
 
 By going through 3 easy steps you can setup your desired coupons and start generating the coupons.
 
-**Generation process**
-Step 0) Introduction, how to
-Step 1) Select coupon settings
-Step 2) Select generation settings
-Step 3) Coupons are being generated
+**Generation process**<br />
+Step 0) Introduction, ‘how to’<br />
+Step 1) Select coupon settings<br />
+Step 2) Select generation settings<br />
+Step 3) Coupons are being generated<br />
 
 The coupons are generated in a very effective way so they will even work on low-cost hosting. During the generation process you will get updates about the progress.
 
 Tested up to **1,000,000** (!!) coupons.
 
-**Please leave a rating if you found this plugin usefull**
+**Please leave a rating if you found this plugin useful**
 
-If you have a feature request, let me know, they're always welcom!
+If you have a feature request, let me know, they're always welcome!
 
 == Installation ==
 
@@ -37,7 +37,12 @@ If you have a feature request, let me know, they're always welcom!
 
 == Screenshots ==
 
-1. To come
+1. Start of generating coupons
+2. Coupon options
+3. Generation options
+4. Generating coupons
+5. Generated coupons
+
 
 == Changelog ==
 

@@ -21,6 +21,25 @@ class WCCG_Admin {
 	 */
 	public function __construct() {
 
+		if ( is_admin() ) :
+			// Initialize
+			add_action( 'init', array( $this, 'init' ) ); // Used init because admin_init is too late for admin_menu
+		endif;
+
+	}
+
+
+	/**
+	 * Admin init.
+	 *
+	 * Initialize admin components.
+	 *
+	 * @since 1.0.0
+	 */
+	public function init() {
+
+		global $pagenow;
+
 		// Add generator page
 		add_action( 'admin_menu', array( $this, 'add_generator_page' ) );
 
@@ -29,6 +48,12 @@ class WCCG_Admin {
 
 		// WooCommerce screen IDs
 		add_action( 'woocommerce_screen_ids', array( $this, 'add_wc_screen_id' ) );
+
+		if ( 'plugins.php' == $pagenow ) :
+			// Plugins page
+			add_filter( 'plugin_action_links_' . plugin_basename( WooCommerce_Coupon_Generator()->file ), array( $this, 'add_plugin_action_links' ), 10, 2 );
+			add_filter( 'plugin_row_meta', array( $this, 'add_plugin_row_meta'), 10, 2 );
+		endif;
 
 	}
 
@@ -40,7 +65,7 @@ class WCCG_Admin {
 	 *
 	 * @since 1.0.0
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_scripts( $hook ) {
 
 		$current_screen = get_current_screen();
 
@@ -106,6 +131,53 @@ class WCCG_Admin {
 		$screen_ids[] = 'woocommerce_page_woocommerce_coupon_generator';
 
 		return $screen_ids;
+
+	}
+
+
+	/**
+	 * Plugin action links.
+	 *
+	 * Add links to the plugins.php page below the plugin name
+	 * and besides the 'activate', 'edit', 'delete' action links.
+	 *
+	 * @since 1.0.2
+	 *
+	 * @param	array	$links	List of existing links.
+	 * @param	string	$file	Name of the current plugin being looped.
+	 * @return	array			List of modified links.
+	 */
+	public function add_plugin_action_links( $links, $file ) {
+
+		if ( $file == plugin_basename( WooCommerce_Coupon_Generator()->file ) ) :
+			$links = array_merge( array(
+				'<a href="' . esc_url( admin_url( '/admin.php?page=woocommerce_coupon_generator' ) ) . '">' . __( 'Start generating coupons', 'woocommerce-coupon-generator' ) . '</a>'
+			), $links );
+		endif;
+
+		return $links;
+
+	}
+
+
+	/**
+	 * Plugin row meta.
+	 *
+	 * Add extra plugin row meta, these are links / meta below the plugin description.
+	 *
+	 * @since 1.0.2
+	 *
+	 * @param	array	$links	List of existing links.
+	 * @param	string	$file	Name of the current plugin being looped.
+	 * @return	array			List of modified links.
+	 */
+	public function add_plugin_row_meta( $links, $file ) {
+
+		if ( $file == plugin_basename( WooCommerce_Coupon_Generator()->file ) ) :
+			$links[] = '<a href="https://shopplugins.com/plugins/category/woocommerce/" target="_blank">' . __( 'More WooCommerce plugins by Shop Plugins', 'woocommerce-coupon-generator' ) . '</a>';
+		endif;
+
+		return $links;
 
 	}
 
