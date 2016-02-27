@@ -157,9 +157,12 @@ class WooCommerce_Coupon_Generator {
  */
 if ( ! function_exists( 'WooCommerce_Coupon_Generator' ) ) :
 
- 	function WooCommerce_Coupon_Generator() {
+	function WooCommerce_Coupon_Generator() {
+
 		return WooCommerce_Coupon_Generator::instance();
+
 	}
+
 
 endif;
 
