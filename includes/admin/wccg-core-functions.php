@@ -61,7 +61,7 @@ function wccg_generate_coupons( $number, $args = array() ) {
 		) );
 
 		$insert_coupon_ids[] = $wpdb->insert_id;
-		$coupon_id = $wpdb->insert_id;
+		$coupon_id           = $wpdb->insert_id;
 
 		// Set GUID
 // 			$wpdb->query( $wpdb->prepare( "UPDATE $wpdb->posts SET guid=%s WHERE ID=%d", get_permalink( $coupon_id ), $coupon_id ) ); // Slow
@@ -72,22 +72,22 @@ function wccg_generate_coupons( $number, $args = array() ) {
 
 	// Add/Replace data to array
 	$meta_array = apply_filters( 'woocommerce_coupon_generator_coupon_meta_data', array(
-		'discount_type'  => empty( $args['discount_type'] ) ? 'fixed_cart' : wc_clean( $args['discount_type'] ),
-		'coupon_amount'  => wc_format_decimal( $args['coupon_amount'] ),
-		'individual_use'  => isset( $args['individual_use'] ) ? 'yes' : 'no',
-		'product_ids'  => implode( ',', array_filter( array_map( 'intval', explode( ',', $args['product_ids'] ) ) ) ),
-		'exclude_product_ids'  => implode( ',', array_filter( array_map( 'intval', explode( ',', $args['exclude_product_ids'] ) ) ) ),
-		'usage_limit'  => empty( $args['usage_limit'] ) ? '' : absint( $args['usage_limit'] ),
-		'usage_limit_per_user'  => empty( $args['usage_limit_per_user'] ) ? '' : absint( $args['usage_limit_per_user'] ),
-		'limit_usage_to_x_items'  => empty( $args['limit_usage_to_x_items'] ) ? '' : absint( $args['limit_usage_to_x_items'] ),
-		'expiry_date'  => wc_clean( $args['expiry_date'] ),
-		'free_shipping'  => isset( $args['free_shipping'] ) ? 'yes' : 'no',
-		'exclude_sale_items'  => isset( $args['exclude_sale_items'] ) ? 'yes' : 'no',
-		'product_categories'  => isset( $args['product_categories'] ) ? array_map( 'intval', $args['product_categories'] ) : array(),
-		'exclude_product_categories'  => isset( $args['exclude_product_categories'] ) ? array_map( 'intval', $args['exclude_product_categories'] ) : array(),
-		'minimum_amount'  => wc_format_decimal( $args['minimum_amount'] ),
-		'maximum_amount'  => wc_format_decimal( $args['maximum_amount'] ),
-		'customer_email'  => array_filter( array_map( 'trim', explode( ',', wc_clean( $args['customer_email'] ) ) ) ),
+		'discount_type'              => empty( $args['discount_type'] ) ? 'fixed_cart' : wc_clean( $args['discount_type'] ),
+		'coupon_amount'              => wc_format_decimal( $args['coupon_amount'] ),
+		'individual_use'             => isset( $args['individual_use'] ) ? 'yes' : 'no',
+		'product_ids'                => implode( ',', array_filter( array_map( 'intval', explode( ',', $args['product_ids'] ) ) ) ),
+		'exclude_product_ids'        => implode( ',', array_filter( array_map( 'intval', explode( ',', $args['exclude_product_ids'] ) ) ) ),
+		'usage_limit'                => empty( $args['usage_limit'] ) ? '' : absint( $args['usage_limit'] ),
+		'usage_limit_per_user'       => empty( $args['usage_limit_per_user'] ) ? '' : absint( $args['usage_limit_per_user'] ),
+		'limit_usage_to_x_items'     => empty( $args['limit_usage_to_x_items'] ) ? '' : absint( $args['limit_usage_to_x_items'] ),
+		'expiry_date'                => wc_clean( $args['expiry_date'] ),
+		'free_shipping'              => isset( $args['free_shipping'] ) ? 'yes' : 'no',
+		'exclude_sale_items'         => isset( $args['exclude_sale_items'] ) ? 'yes' : 'no',
+		'product_categories'         => isset( $args['product_categories'] ) ? array_map( 'intval', $args['product_categories'] ) : array(),
+		'exclude_product_categories' => isset( $args['exclude_product_categories'] ) ? array_map( 'intval', $args['exclude_product_categories'] ) : array(),
+		'minimum_amount'             => wc_format_decimal( $args['minimum_amount'] ),
+		'maximum_amount'             => wc_format_decimal( $args['maximum_amount'] ),
+		'customer_email'             => array_filter( array_map( 'trim', explode( ',', wc_clean( $args['customer_email'] ) ) ) ),
 	), $coupon_id );
 
 
@@ -97,13 +97,13 @@ function wccg_generate_coupons( $number, $args = array() ) {
 
 		foreach ( $insert_coupon_ids as $coupon_id ) :
 
-			$insert_meta_values .= $wpdb->prepare( "(%d, %s, %s)", $coupon_id, sanitize_title( wp_unslash( $key ) ), maybe_serialize( wp_unslash( $value ) ) );
+			$insert_meta_values .= $wpdb->prepare( '(%d, %s, %s)', $coupon_id, sanitize_title( wp_unslash( $key ) ), maybe_serialize( wp_unslash( $value ) ) );
 
 			$meta_array_keys = array_keys( $meta_array );
 			if ( $key == end( $meta_array_keys ) && $coupon_id == end( $insert_coupon_ids ) ) :
-				$insert_meta_values .= ";";
+				$insert_meta_values .= ';';
 			else :
-				$insert_meta_values .= ", ";
+				$insert_meta_values .= ', ';
 			endif;
 
 		endforeach;
@@ -124,15 +124,15 @@ function wccg_generate_coupons( $number, $args = array() ) {
  *
  * @since 1.0.0
  *
- * @return	string	Random coupon code.
+ * @return string Random coupon code.
  */
 function wccg_get_random_coupon() {
 
 	// Generate unique coupon code
-	$random_coupon 	= '';
-	$length			= 12;
-	$charset		= 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-	$count 			= strlen( $charset );
+	$random_coupon = '';
+	$length        = 12;
+	$charset       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	$count         = strlen( $charset );
 
 	while ( $length-- ) :
 		$random_coupon .= $charset[ mt_rand( 0, $count-1 ) ];
@@ -164,13 +164,13 @@ function wccg_ajax_process_batch_coupons() {
 		die( -1 );
 	endif;
 
-	$progress = 0;
-	$message = '';
+	$progress   = 0;
+	$message    = '';
 	$batch_size = 500;
 	$batch_step = absint( $_POST['batch_step'] );
 
 	$total_numer_coupons = $post_data['number_of_coupons'];
-	$coupons_generated = $batch_step * $batch_size;
+	$coupons_generated   = $batch_step * $batch_size;
 	$coupons_to_generate = min( $total_numer_coupons - $coupons_generated, $batch_size );
 
 
@@ -182,8 +182,8 @@ function wccg_ajax_process_batch_coupons() {
 	// Step
 	$coupons_generated += $coupons_to_generate;
 	if ( $coupons_generated == $total_numer_coupons ) :
-		$batch_step = 'done';
-		$message .= '<strong>' . sprintf( __( 'Coupon generation completed! Created %1$d coupons.', 'woocommerce-coupon-generator' ), $coupons_generated ) . '</strong><br/>';
+		$batch_step  = 'done';
+		$message    .= '<strong>' . sprintf( __( 'Coupon generation completed! Created %1$d coupons.', 'woocommerce-coupon-generator' ), $coupons_generated ) . '</strong><br/>';
 	else :
 		++$batch_step;
 	endif;
@@ -197,4 +197,6 @@ function wccg_ajax_process_batch_coupons() {
 	die( json_encode( array( 'step' => $batch_step, 'progress' => $progress, 'message' => $message ) ) );
 
 }
+
+
 add_action( 'wp_ajax_wccg_generate_coupons', 'wccg_ajax_process_batch_coupons' );

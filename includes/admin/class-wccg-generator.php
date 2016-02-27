@@ -35,15 +35,15 @@ class WCCG_Generator {
 				'name'    => __( 'Introduction', 'woocommerce-coupon-generator' ),
 				'handler' => 'introduction_handler',
 			),
-			'1'	=> array(
+			'1' => array(
 				'name'    => __( 'Coupon options', 'woocommerce-coupon-generator' ),
 				'handler' => 'coupon_options_handler',
 			),
-			'2'	=> array(
+			'2' => array(
 				'name'    => __( 'Generator options', 'woocommerce-coupon-generator' ),
 				'handler' => 'generator_options_handler',
 			),
-			'3'	=> array(
+			'3' => array(
 				'name'    => __( 'Generate coupons', 'woocommerce-coupon-generator' ),
 				'handler' => 'generate_coupons_handler',
 			),
@@ -59,7 +59,7 @@ class WCCG_Generator {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return	int	Step number.
+	 * @return int Step number.
 	 */
 	public function current_step() {
 
@@ -82,7 +82,7 @@ class WCCG_Generator {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param	int	$step	Step to output. Leave empty to use the current step.
+	 * @param int $step Step to output. Leave empty to use the current step.
 	 */
 	public function output_step( $step = null ) {
 
@@ -125,6 +125,7 @@ class WCCG_Generator {
 		require_once 'views/html-coupon-generator-step-0.php';
 
 	}
+
 
 	/**
 	 * Coupon options handler.

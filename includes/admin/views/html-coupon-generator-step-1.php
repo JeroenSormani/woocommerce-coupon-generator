@@ -35,9 +35,9 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 							<div class="inside"><?php
 
 								$temp_coupon = wp_insert_post( array(
-									'post_type'	=> 'shop_coupon',
+									'post_type'   => 'shop_coupon',
 									'post_status' => 'draft',
-									'post_title' => 'temp_generator_coupon',
+									'post_title'  => 'temp_generator_coupon',
 								) );
 								global $thepostid;
 								$thepostid = $temp_coupon;

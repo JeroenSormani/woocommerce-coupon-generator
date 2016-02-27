@@ -123,8 +123,8 @@ class WCCG_Admin {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param	array	$scren_ids	List of existing screen IDs.
-	 * @return	array				List of modfied screen IDs.
+	 * @param  array $screen_ids List of existing screen IDs.
+	 * @return array            List of modfied screen IDs.
 	 */
 	public function add_wc_screen_id( $screen_ids ) {
 
