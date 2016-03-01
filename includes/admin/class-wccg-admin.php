@@ -52,7 +52,7 @@ class WCCG_Admin {
 		if ( 'plugins.php' == $pagenow ) :
 			// Plugins page
 			add_filter( 'plugin_action_links_' . plugin_basename( WooCommerce_Coupon_Generator()->file ), array( $this, 'add_plugin_action_links' ), 10, 2 );
-			add_filter( 'plugin_row_meta', array( $this, 'add_plugin_row_meta'), 10, 2 );
+			add_filter( 'plugin_row_meta', array( $this, 'add_plugin_row_meta' ), 10, 2 );
 		endif;
 
 	}
@@ -124,7 +124,7 @@ class WCCG_Admin {
 	 * @since 1.0.0
 	 *
 	 * @param  array $screen_ids List of existing screen IDs.
-	 * @return array            List of modfied screen IDs.
+	 * @return array             List of modfied screen IDs.
 	 */
 	public function add_wc_screen_id( $screen_ids ) {
 
@@ -143,9 +143,9 @@ class WCCG_Admin {
 	 *
 	 * @since 1.0.2
 	 *
-	 * @param	array	$links	List of existing links.
-	 * @param	string	$file	Name of the current plugin being looped.
-	 * @return	array			List of modified links.
+	 * @param  array  $links List of existing links.
+	 * @param  string $file  Name of the current plugin being looped.
+	 * @return array         List of modified links.
 	 */
 	public function add_plugin_action_links( $links, $file ) {
 
@@ -167,9 +167,9 @@ class WCCG_Admin {
 	 *
 	 * @since 1.0.2
 	 *
-	 * @param	array	$links	List of existing links.
-	 * @param	string	$file	Name of the current plugin being looped.
-	 * @return	array			List of modified links.
+	 * @param  array  $links List of existing links.
+	 * @param  string $file  Name of the current plugin being looped.
+	 * @return array         List of modified links.
 	 */
 	public function add_plugin_row_meta( $links, $file ) {
 
