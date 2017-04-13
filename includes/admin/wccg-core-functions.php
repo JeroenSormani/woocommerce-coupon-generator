@@ -75,8 +75,8 @@ function wccg_generate_coupons( $number, $args = array() ) {
 		'discount_type'              => empty( $args['discount_type'] ) ? 'fixed_cart' : wc_clean( $args['discount_type'] ),
 		'coupon_amount'              => wc_format_decimal( $args['coupon_amount'] ),
 		'individual_use'             => isset( $args['individual_use'] ) ? 'yes' : 'no',
-		'product_ids'                => implode( ',', array_filter( array_map( 'intval', explode( ',', $args['product_ids'] ) ) ) ),
-		'exclude_product_ids'        => implode( ',', array_filter( array_map( 'intval', explode( ',', $args['exclude_product_ids'] ) ) ) ),
+		'product_ids'                => implode( ',', array_filter( array_map( 'intval', $args['product_ids'] ) ) ),
+		'exclude_product_ids'        => implode( ',', array_filter( array_map( 'intval', $args['exclude_product_ids'] ) ) ),
 		'usage_limit'                => empty( $args['usage_limit'] ) ? '' : absint( $args['usage_limit'] ),
 		'usage_limit_per_user'       => empty( $args['usage_limit_per_user'] ) ? '' : absint( $args['usage_limit_per_user'] ),
 		'limit_usage_to_x_items'     => empty( $args['limit_usage_to_x_items'] ) ? '' : absint( $args['limit_usage_to_x_items'] ),
@@ -169,9 +169,9 @@ function wccg_ajax_process_batch_coupons() {
 	$batch_size = 500;
 	$batch_step = absint( $_POST['batch_step'] );
 
-	$total_numer_coupons = $post_data['number_of_coupons'];
-	$coupons_generated   = $batch_step * $batch_size;
-	$coupons_to_generate = min( $total_numer_coupons - $coupons_generated, $batch_size );
+	$total_number_coupons = $post_data['number_of_coupons'];
+	$coupons_generated    = $batch_step * $batch_size;
+	$coupons_to_generate  = min( $total_number_coupons - $coupons_generated, $batch_size );
 
 
 	// Coupon generation
@@ -181,7 +181,7 @@ function wccg_ajax_process_batch_coupons() {
 
 	// Step
 	$coupons_generated += $coupons_to_generate;
-	if ( $coupons_generated == $total_numer_coupons ) :
+	if ( $coupons_generated == $total_number_coupons ) :
 		$batch_step  = 'done';
 		$message    .= '<strong>' . sprintf( __( 'Coupon generation completed! Created %1$d coupons.', 'woocommerce-coupon-generator' ), $coupons_generated ) . '</strong><br/>';
 	else :
@@ -192,7 +192,7 @@ function wccg_ajax_process_batch_coupons() {
 	$message .= sprintf( __( '%1$s coupons created in %2$s seconds', 'woocommerce-coupon-generator' ), $coupons_to_generate, round( $execution_time, 3 ) );
 
 	// Progress
-	$progress = round( $coupons_generated / $total_numer_coupons * 100 );
+	$progress = round( $coupons_generated / $total_number_coupons * 100 );
 
 	die( json_encode( array( 'step' => $batch_step, 'progress' => $progress, 'message' => $message ) ) );
 
