@@ -71,12 +71,14 @@ function wccg_generate_coupons( $number, $args = array() ) {
 
 
 	// Add/Replace data to array
+	$product_ids = is_array( $args['product_ids'] ) ? $args['product_ids'] : explode( ',', $args['product_ids'] );
+	$exclude_ids = is_array( $args['exclude_product_ids'] ) ? $args['exclude_product_ids'] : explode( ',', $args['exclude_product_ids'] );
 	$meta_array = apply_filters( 'woocommerce_coupon_generator_coupon_meta_data', array(
 		'discount_type'              => empty( $args['discount_type'] ) ? 'fixed_cart' : wc_clean( $args['discount_type'] ),
 		'coupon_amount'              => wc_format_decimal( $args['coupon_amount'] ),
 		'individual_use'             => isset( $args['individual_use'] ) ? 'yes' : 'no',
-		'product_ids'                => implode( ',', array_filter( array_map( 'intval', $args['product_ids'] ) ) ),
-		'exclude_product_ids'        => implode( ',', array_filter( array_map( 'intval', $args['exclude_product_ids'] ) ) ),
+		'product_ids'                => implode( ',', array_filter( array_map( 'intval', $product_ids ) ) ),
+		'exclude_product_ids'        => implode( ',', array_filter( array_map( 'intval', $exclude_ids ) ) ),
 		'usage_limit'                => empty( $args['usage_limit'] ) ? '' : absint( $args['usage_limit'] ),
 		'usage_limit_per_user'       => empty( $args['usage_limit_per_user'] ) ? '' : absint( $args['usage_limit_per_user'] ),
 		'limit_usage_to_x_items'     => empty( $args['limit_usage_to_x_items'] ) ? '' : absint( $args['limit_usage_to_x_items'] ),
