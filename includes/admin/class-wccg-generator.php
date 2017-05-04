@@ -31,7 +31,7 @@ class WCCG_Generator {
 	public function __construct() {
 
 		$this->steps = array(
-			'0'	=> array(
+			'0' => array(
 				'name'    => __( 'Introduction', 'woocommerce-coupon-generator' ),
 				'handler' => 'introduction_handler',
 			),
