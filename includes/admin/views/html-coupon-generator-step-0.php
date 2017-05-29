@@ -49,6 +49,21 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 			<span class="continue-button"><?php _e( 'Continue to the next step', 'woocommerce-coupon-generator' ); ?></span>
 		</a>
 
+		<?php
+			$upload_dir = wp_upload_dir();
+			$files_path = $upload_dir['basedir'] . '/coupon-generator/';
+			$files_url = $upload_dir['baseurl'];
+
+			$files_paths = glob($files_path . '*.txt');
+
+			if(!empty($files_paths)){
+				echo '<h3>Previuosly generated coupon codes:</h3>';
+				foreach ($files_paths as $file) {
+					$filename = basename($file);
+					echo '<a href="'. $files_url .'/coupon-generator/'. $filename .'" target="_blank">'.$filename.'</a><br>';
+				}
+			}
+		?>
 	</div>
 
 </div>
