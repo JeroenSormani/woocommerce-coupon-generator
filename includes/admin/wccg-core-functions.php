@@ -31,7 +31,8 @@ function wccg_generate_coupons( $number, $args = array() ) {
 	
 	// Define array for coupons & get coupon prefix
 	$coupon_codes_arr = array();
-	$coupon_prefix = strtolower(strip_tags($args['coupon_prefix']));
+	$coupon_prefix = remove_accents($args['coupon_prefix']);//WP function converts all accent characters to ASCII characters.
+	$coupon_prefix = strtolower(strip_tags($coupon_prefix));
 	
 	$wpdb->query( 'START TRANSACTION' );
 
