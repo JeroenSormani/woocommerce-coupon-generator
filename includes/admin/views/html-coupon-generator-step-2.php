@@ -38,6 +38,11 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 								<div id="coupon_options" class="panel-wrap">
 									<div class="panel woocommerce_options_panel" style="display: block;">
 
+										<p class="form-field coupon_prefix ">
+											<label for="coupon_prefix"><?php _e( 'Coupon prefix', 'woocommerce-coupon-generator' ); ?></label>
+											<input type="text" autofocus class="short" style="width: 200px;" name="coupon_prefix" id="coupon_prefix_text" value="" placeholder="xxx">
+											<img class="help_tip" data-tip='<?php _e( 'Text before coupon code (ex. xxx-code). NOT REQUIRED.', 'woocommerce-coupon-generator' ); ?>' src="<?php echo WC()->plugin_url(); ?>/assets/images/help.png" height="16" width="16" />
+										</p>
 										<p class="form-field number_of_coupons ">
 											<label for="number_of_coupons"><?php _e( 'Number of coupons', 'woocommerce-coupon-generator' ); ?></label>
 											<input type="number" min="1" autofocus class="short" style="width: 200px;" name="number_of_coupons" id="coupon_amount" value="1" placeholder="10">
