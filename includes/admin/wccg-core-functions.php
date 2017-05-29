@@ -169,18 +169,17 @@ function wccg_get_random_coupon($coupon_prefix = null) {
 		$random_coupon .= $charset[ mt_rand( 0, $count-1 ) ];
 	endwhile;
 
-	$random_coupon = implode( '-', str_split( strtoupper( $random_coupon ), 4 ) );
+	//Added coupon prefix is presented
+	if(!empty($coupon_prefix)){
+		$random_coupon = $coupon_prefix . '-' . implode( '-', str_split( strtoupper( $random_coupon ), 4 ) );
+	}else{
+		$random_coupon = implode( '-', str_split( strtoupper( $random_coupon ), 4 ) );
+	}
 
 	// Ensure coupon code is correctly formatted
 	$coupon_code = apply_filters( 'woocommerce_coupon_code', $random_coupon );
 
-	//Added if coupon prefix is presented
-	if(!empty($coupon_prefix)){
-		return $coupon_prefix.'-'.$coupon_code;
-	}else{
-		return $coupon_code;
-	}
-
+	return $coupon_code;
 }
 
 
