@@ -28,12 +28,12 @@ function wccg_generate_coupons( $number, $args = array() ) {
 
 	global $wpdb;
 	$insert_coupon_ids = array();
-	
+
 	// Define array for coupons & get coupon prefix
 	$coupon_codes_arr = array();
 	$coupon_prefix = remove_accents($args['coupon_prefix']);//WP function converts all accent characters to ASCII characters.
 	$coupon_prefix = strtolower(strip_tags($coupon_prefix));
-	
+
 	$wpdb->query( 'START TRANSACTION' );
 
 	// Query coupons
@@ -41,7 +41,7 @@ function wccg_generate_coupons( $number, $args = array() ) {
 	for ( $i = 0; $i < $number_of_coupons; $i++ ) :
 
 		// Added $coupon_prefix string
-		$coupon_code = wccg_get_random_coupon($coupon_prefix); 
+		$coupon_code = wccg_get_random_coupon($coupon_prefix);
 		// Store generated coupons to Array
 		$coupon_codes_arr[] = $coupon_code;
 
@@ -123,7 +123,7 @@ function wccg_generate_coupons( $number, $args = array() ) {
 	$wpdb->query( "INSERT INTO $wpdb->postmeta (post_id, meta_key, meta_value) VALUES $insert_meta_values" );
 
 	$wpdb->query( 'COMMIT' );
-	
+
 	// Generate .txt file with coupon codes
 	// Create directory
 	$upload_dir = wp_upload_dir();
@@ -138,12 +138,12 @@ function wccg_generate_coupons( $number, $args = array() ) {
 		$filename = date('d-m-Y_') . microtime(true) . '.txt';
 	}
 	$file = $coupons_dirname . '/' .$filename;
-	
+
 	// Creating file
 	$open = fopen( $file, "a" );
 	$write = fputs( $open, implode(PHP_EOL,$coupon_codes_arr));
 	fclose( $open );
-	
+
 	// Return filename
 	return $filename;
 }
@@ -212,7 +212,7 @@ function wccg_ajax_process_batch_coupons() {
 
 	// Coupon generation
 	$start_time = microtime( true );
-	
+
 	//Collecting return value: generated filename
 	$filename = wccg_generate_coupons( $coupons_to_generate, $post_data );
 	//wccg_generate_coupons( $coupons_to_generate, $post_data );
@@ -231,10 +231,10 @@ function wccg_ajax_process_batch_coupons() {
 	$message .= sprintf( __( '%1$s coupons created in %2$s seconds', 'woocommerce-coupon-generator' ), $coupons_to_generate, round( $execution_time, 3 ) );
 
 	//Add link to file
-	$upload_dir = wp_upload_dir();	
+	$upload_dir = wp_upload_dir();
 	$coupons_dirname = $upload_dir['baseurl'].'/coupon-generator';
 	$message .= '<br>Generated coupon codes: <a href="'.$coupons_dirname.'/'.$filename.'" target="_blank">'.$filename.'</a>';
-	
+
 	// Progress
 	$progress = round( $coupons_generated / $total_number_coupons * 100 );
 
