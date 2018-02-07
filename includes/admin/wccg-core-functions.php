@@ -185,13 +185,13 @@ function wccg_ajax_process_batch_coupons() {
 	$coupons_generated += $coupons_to_generate;
 	if ( $coupons_generated == $total_number_coupons ) :
 		$batch_step  = 'done';
-		$message    .= '<strong>' . sprintf( __( 'Coupon generation completed! Created %1$d coupons.', 'woocommerce-coupon-generator' ), $coupons_generated ) . '</strong><br/>';
+		$message    .= '<strong>' . sprintf( __( 'Coupon generation completed! Created %1$d coupons.', 'coupon-generator-for-woocommerce' ), $coupons_generated ) . '</strong><br/>';
 	else :
 		++$batch_step;
 	endif;
 
 	// Add message
-	$message .= sprintf( __( '%1$s coupons created in %2$s seconds', 'woocommerce-coupon-generator' ), $coupons_to_generate, round( $execution_time, 3 ) );
+	$message .= sprintf( __( '%1$s coupons created in %2$s seconds', 'coupon-generator-for-woocommerce' ), $coupons_to_generate, round( $execution_time, 3 ) );
 
 	// Progress
 	$progress = round( $coupons_generated / $total_number_coupons * 100 );

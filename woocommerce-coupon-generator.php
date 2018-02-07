@@ -132,11 +132,11 @@ class WooCommerce_Coupon_Generator {
 	 */
 	public function load_textdomain() {
 
-		$locale = apply_filters( 'plugin_locale', get_locale(), 'woocommerce-coupon-generator' );
+		$locale = apply_filters( 'plugin_locale', get_locale(), 'coupon-generator-for-woocommerce' );
 
 		// Load textdomain
-		load_textdomain( 'woocommerce-coupon-generator', WP_LANG_DIR . '/woocommerce-coupon-generator/woocommerce-coupon-generator-' . $locale . '.mo' );
-		load_plugin_textdomain( 'woocommerce-coupon-generator', false, basename( dirname( __FILE__ ) ) . '/languages' );
+		load_textdomain( 'coupon-generator-for-woocommerce', WP_LANG_DIR . '/woocommerce-coupon-generator/woocommerce-coupon-generator-' . $locale . '.mo' );
+		load_plugin_textdomain( 'coupon-generator-for-woocommerce', false, basename( dirname( __FILE__ ) ) . '/languages' );
 
 	}
 

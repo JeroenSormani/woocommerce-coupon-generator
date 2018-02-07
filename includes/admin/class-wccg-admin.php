@@ -73,9 +73,9 @@ class WCCG_Admin {
 
 			$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-			wp_enqueue_style( 'woocommerce-coupon-generator', plugins_url( 'assets/css/woocommerce-coupon-generator-admin.css', WooCommerce_Coupon_Generator()->file ), array(), WooCommerce_Coupon_Generator()->version );
+			wp_enqueue_style( 'coupon-generator-for-woocommerce', plugins_url( 'assets/css/woocommerce-coupon-generator-admin.css', WooCommerce_Coupon_Generator()->file ), array(), WooCommerce_Coupon_Generator()->version );
 
-			wp_enqueue_script( 'woocommerce-coupon-generator', plugins_url( 'assets/js/woocommerce-coupon-generator-admin.js', WooCommerce_Coupon_Generator()->file ), array( 'jquery' ), WooCommerce_Coupon_Generator()->version, true );
+			wp_enqueue_script( 'coupon-generator-for-woocommerce', plugins_url( 'assets/js/woocommerce-coupon-generator-admin.js', WooCommerce_Coupon_Generator()->file ), array( 'jquery' ), WooCommerce_Coupon_Generator()->version, true );
 
 			wp_enqueue_script( 'wc-admin-meta-boxes' );
 			wp_enqueue_script( 'wc-admin-coupon-meta-boxes' );
@@ -94,7 +94,7 @@ class WCCG_Admin {
 	 */
 	public function add_generator_page() {
 
-		add_submenu_page( 'woocommerce', __( 'WooCommerce Coupon Generator', 'woocommerce-coupon-generator' ), __( 'Coupon generator', 'woocommerce-coupon-generator' ), 'manage_woocommerce', 'woocommerce_coupon_generator', array( $this, 'coupon_generator_callback' ) );
+		add_submenu_page( 'woocommerce', __( 'WooCommerce Coupon Generator', 'coupon-generator-for-woocommerce' ), __( 'Coupon generator', 'coupon-generator-for-woocommerce' ), 'manage_woocommerce', 'woocommerce_coupon_generator', array( $this, 'coupon_generator_callback' ) );
 
 	}
 
@@ -151,7 +151,7 @@ class WCCG_Admin {
 
 		if ( $file == plugin_basename( WooCommerce_Coupon_Generator()->file ) ) :
 			$links = array_merge( array(
-				'<a href="' . esc_url( admin_url( '/admin.php?page=woocommerce_coupon_generator' ) ) . '">' . __( 'Start generating coupons', 'woocommerce-coupon-generator' ) . '</a>'
+				'<a href="' . esc_url( admin_url( '/admin.php?page=woocommerce_coupon_generator' ) ) . '">' . __( 'Start generating coupons', 'coupon-generator-for-woocommerce' ) . '</a>'
 			), $links );
 		endif;
 
@@ -174,7 +174,7 @@ class WCCG_Admin {
 	public function add_plugin_row_meta( $links, $file ) {
 
 		if ( $file == plugin_basename( WooCommerce_Coupon_Generator()->file ) ) :
-			$links[] = '<a href="https://shopplugins.com/plugins/category/woocommerce/" target="_blank">' . __( 'More WooCommerce plugins by Shop Plugins', 'woocommerce-coupon-generator' ) . '</a>';
+			$links[] = '<a href="https://shopplugins.com/plugins/category/woocommerce/" target="_blank">' . __( 'More WooCommerce plugins by Shop Plugins', 'coupon-generator-for-woocommerce' ) . '</a>';
 		endif;
 
 		return $links;

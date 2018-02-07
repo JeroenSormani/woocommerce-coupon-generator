@@ -32,19 +32,19 @@ class WCCG_Generator {
 
 		$this->steps = array(
 			'0'	=> array(
-				'name'    => __( 'Introduction', 'woocommerce-coupon-generator' ),
+				'name'    => __( 'Introduction', 'coupon-generator-for-woocommerce' ),
 				'handler' => 'introduction_handler',
 			),
 			'1' => array(
-				'name'    => __( 'Coupon options', 'woocommerce-coupon-generator' ),
+				'name'    => __( 'Coupon options', 'coupon-generator-for-woocommerce' ),
 				'handler' => 'coupon_options_handler',
 			),
 			'2' => array(
-				'name'    => __( 'Generator options', 'woocommerce-coupon-generator' ),
+				'name'    => __( 'Generator options', 'coupon-generator-for-woocommerce' ),
 				'handler' => 'generator_options_handler',
 			),
 			'3' => array(
-				'name'    => __( 'Generate coupons', 'woocommerce-coupon-generator' ),
+				'name'    => __( 'Generate coupons', 'coupon-generator-for-woocommerce' ),
 				'handler' => 'generate_coupons_handler',
 			),
 		);
@@ -96,11 +96,11 @@ class WCCG_Generator {
 		endif;
 
 		if ( ! is_array( $this->steps ) || ! isset( $this->steps[ $step ]['handler'] ) ) :
-			wp_die( __( 'I\'m trying to load a step but couldn\'t find it! Please go back and try again.', 'woocommerce-coupon-generator' ), __( 'Could not find step', 'woocommerce-coupon-generator' ) );
+			wp_die( __( 'I\'m trying to load a step but couldn\'t find it! Please go back and try again.', 'coupon-generator-for-woocommerce' ), __( 'Could not find step', 'coupon-generator-for-woocommerce' ) );
 		endif;
 
 		if ( ! is_callable( array( $this, $this->steps[ $step ]['handler'] ) ) && ! is_callable( $this->steps[ $step ]['handler'] ) ) :
-			wp_die( __( 'I\'m trying to load a generator step but couldn\'t find the right callback! Please go back and try again.', 'woocommerce-coupon-generator' ), __( 'Could not find step', 'woocommerce-coupon-generator' ) );
+			wp_die( __( 'I\'m trying to load a generator step but couldn\'t find the right callback! Please go back and try again.', 'coupon-generator-for-woocommerce' ), __( 'Could not find step', 'coupon-generator-for-woocommerce' ) );
 		endif;
 
 

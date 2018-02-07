@@ -15,13 +15,13 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 	<div class='wc-coupon-generator-wrap wc-coupon-generator-wrap-step-3'>
 
-		<h2><?php _e( 'WooCommerce Coupon Generator', 'woocommerce-coupon-generator' ); ?></h2>
+		<h2><?php _e( 'WooCommerce Coupon Generator', 'coupon-generator-for-woocommerce' ); ?></h2>
 
 		<div class='steps'>
-			<span class='step step-0'><a href='<?php echo esc_url( remove_query_arg( 'step' ) ); ?>'><?php _e( '0. Introduction', 'woocommerce-coupon-generator' ); ?></a></span>
-			<span class='step step-1'><a href='<?php echo esc_url( add_query_arg( 'step', 1 ) ); ?>'><?php _e( '1. Coupon options', 'woocommerce-coupon-generator' ); ?></a></span>
-			<span class='step step-2'><?php _e( '2. Generator options', 'woocommerce-coupon-generator' ); ?></span>
-			<span class='step step-3 active'><?php _e( '3. Generating coupons', 'woocommerce-coupon-generator' ); ?></span>
+			<span class='step step-0'><a href='<?php echo esc_url( remove_query_arg( 'step' ) ); ?>'><?php _e( '0. Introduction', 'coupon-generator-for-woocommerce' ); ?></a></span>
+			<span class='step step-1'><a href='<?php echo esc_url( add_query_arg( 'step', 1 ) ); ?>'><?php _e( '1. Coupon options', 'coupon-generator-for-woocommerce' ); ?></a></span>
+			<span class='step step-2'><?php _e( '2. Generator options', 'coupon-generator-for-woocommerce' ); ?></span>
+			<span class='step step-3 active'><?php _e( '3. Generating coupons', 'coupon-generator-for-woocommerce' ); ?></span>
 		</div>
 
 		<div class='wc-coupon-generator-coupon-data' id='poststuff'>
@@ -29,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 			<div id="postbox-container-2" class="postbox-container">
 				<div id="normal-sortables" class="meta-box-sortables ui-sortable">
 					<div id="wc-coupon-generator-options" class="postbox ">
-						<h3 class="hndle ui-sortable-handle"><span><?php _e( 'Generating coupons', 'woocommerce-coupon-generator' ); ?></span></h3>
+						<h3 class="hndle ui-sortable-handle"><span><?php _e( 'Generating coupons', 'coupon-generator-for-woocommerce' ); ?></span></h3>
 						<div class="inside">
 
 							<div id="coupon_options" class="panel-wrap">

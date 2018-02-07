@@ -16,13 +16,13 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 	<div class='wc-coupon-generator-wrap wc-coupon-generator-wrap-step-1'>
 
-		<h2><?php _e( 'WooCommerce Coupon Generator', 'woocommerce-coupon-generator' ); ?></h2>
+		<h2><?php _e( 'WooCommerce Coupon Generator', 'coupon-generator-for-woocommerce' ); ?></h2>
 
 		<div class='steps'>
-			<span class='step step-0'><a href='<?php echo esc_url( remove_query_arg( 'step' ) ); ?>'><?php _e( '0. Introduction', 'woocommerce-coupon-generator' ); ?></a></span>
-			<span class='step step-1 active'><?php _e( '1. Coupon options', 'woocommerce-coupon-generator' ); ?></span>
-			<span class='step step-2'><?php _e( '2. Generator options', 'woocommerce-coupon-generator' ); ?></span>
-			<span class='step step-3'><?php _e( '3. Generating coupons', 'woocommerce-coupon-generator' ); ?></span>
+			<span class='step step-0'><a href='<?php echo esc_url( remove_query_arg( 'step' ) ); ?>'><?php _e( '0. Introduction', 'coupon-generator-for-woocommerce' ); ?></a></span>
+			<span class='step step-1 active'><?php _e( '1. Coupon options', 'coupon-generator-for-woocommerce' ); ?></span>
+			<span class='step step-2'><?php _e( '2. Generator options', 'coupon-generator-for-woocommerce' ); ?></span>
+			<span class='step step-3'><?php _e( '3. Generating coupons', 'coupon-generator-for-woocommerce' ); ?></span>
 		</div>
 
 		<form method='post' id='wc-coupon-generator' action='<?php echo esc_url( add_query_arg( 'step', 2 ) ); ?>'>
@@ -51,7 +51,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 				<div class='clear'></div>
 
 				<a href="javascript:void(0);" class="continue-button-wrap" onclick="document.getElementById('wc-coupon-generator').submit();">
-					<span class="continue-button"><?php _e( 'Continue to the next step', 'woocommerce-coupon-generator' ); ?></span>
+					<span class="continue-button"><?php _e( 'Continue to the next step', 'coupon-generator-for-woocommerce' ); ?></span>
 				</a>
 
 			</div>
