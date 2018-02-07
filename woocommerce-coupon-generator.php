@@ -6,7 +6,7 @@
  * Version: 		1.0.1
  * Author: 			Jeroen Sormani
  * Author URI: 		http://jeroensormani.com/
- * Text Domain: 	woocommerce-coupon-generator
+ * Text Domain: 	coupon-generator-for-woocommerce
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
