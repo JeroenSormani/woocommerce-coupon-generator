@@ -26,12 +26,12 @@ php:
     type_cast_inner_whitespace: no_space
     use_quotes: single_quotes
     variable_array_index_whitespace: whitespace
-    whitespace_after_control_structure: whitespace
     whitespace_after_doc_asterisk: single_space
     whitespace_after_else: space
     whitespace_after_function_open: newline
     whitespace_after_function: double_newline
     whitespace_before_control_structure_brace: space
+    whitespace_before_control_structure_parentheses: whitespace
     whitespace_before_doc_asterisk: space
     whitespace_before_else: space
     whitespace_before_function_brace: space

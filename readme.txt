@@ -1,5 +1,5 @@
 === Coupon Generator for WooCommerce ===
-Contributors: sormano, shopplugins
+Contributors: sormano
 Tags: woocommerce coupon generator, woocommerce, woocommerce coupon, coupons, coupon importer, woocommerce automatic coupons, woocommerce random coupons
 Requires at least: 4.0.0
 Tested up to: 4.7.3
