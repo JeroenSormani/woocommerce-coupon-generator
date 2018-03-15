@@ -28,14 +28,22 @@ function wccg_generate_coupons( $number, $args = array() ) {
 
 	global $wpdb;
 	$insert_coupon_ids = array();
-
+	
+	// Define array for coupons & get coupon prefix
+	$coupon_codes_arr = array();
+	$coupon_prefix = remove_accents($args['coupon_prefix']);//WP function converts all accent characters to ASCII characters.
+	$coupon_prefix = strtolower(strip_tags($coupon_prefix));
+	
 	$wpdb->query( 'START TRANSACTION' );
 
 	// Query coupons
 	$number_of_coupons = absint( $number );
 	for ( $i = 0; $i < $number_of_coupons; $i++ ) :
 
-		$coupon_code = wccg_get_random_coupon();
+		// Added $coupon_prefix string
+		$coupon_code = wccg_get_random_coupon($coupon_prefix); 
+		// Store generated coupons to Array
+		$coupon_codes_arr[] = $coupon_code;
 
 		// Insert coupon post
 		$wpdb->query( $wpdb->prepare( "INSERT INTO $wpdb->posts SET
@@ -115,7 +123,29 @@ function wccg_generate_coupons( $number, $args = array() ) {
 	$wpdb->query( "INSERT INTO $wpdb->postmeta (post_id, meta_key, meta_value) VALUES $insert_meta_values" );
 
 	$wpdb->query( 'COMMIT' );
-
+	
+	// Generate .txt file with coupon codes
+	// Create directory
+	$upload_dir = wp_upload_dir();
+	$coupons_dirname = $upload_dir['basedir'].'/coupon-generator';
+	if ( ! file_exists( $coupons_dirname ) ) {
+		wp_mkdir_p( $coupons_dirname );
+	}
+	// File name with full link & prefix
+	if(!empty($coupon_prefix)){
+		$filename = $coupon_prefix .'_'. date('d-m-Y_') . microtime(true) . '.txt';
+	}else{
+		$filename = date('d-m-Y_') . microtime(true) . '.txt';
+	}
+	$file = $coupons_dirname . '/' .$filename;
+	
+	// Creating file
+	$open = fopen( $file, "a" );
+	$write = fputs( $open, implode(PHP_EOL,$coupon_codes_arr));
+	fclose( $open );
+	
+	// Return filename
+	return $filename;
 }
 
 
@@ -126,9 +156,9 @@ function wccg_generate_coupons( $number, $args = array() ) {
  *
  * @since 1.0.0
  *
- * @return string Random coupon code.
+ * @return string Random coupon code with prefix or not.
  */
-function wccg_get_random_coupon() {
+function wccg_get_random_coupon($coupon_prefix = null) {
 
 	// Generate unique coupon code
 	$random_coupon = '';
@@ -140,13 +170,17 @@ function wccg_get_random_coupon() {
 		$random_coupon .= $charset[ mt_rand( 0, $count-1 ) ];
 	endwhile;
 
-	$random_coupon = implode( '-', str_split( strtoupper( $random_coupon ), 4 ) );
+	//Added coupon prefix is presented
+	if(!empty($coupon_prefix)){
+		$random_coupon = $coupon_prefix . '-' . implode( '-', str_split( strtoupper( $random_coupon ), 4 ) );
+	}else{
+		$random_coupon = implode( '-', str_split( strtoupper( $random_coupon ), 4 ) );
+	}
 
 	// Ensure coupon code is correctly formatted
 	$coupon_code = apply_filters( 'woocommerce_coupon_code', $random_coupon );
 
 	return $coupon_code;
-
 }
 
 
@@ -178,7 +212,10 @@ function wccg_ajax_process_batch_coupons() {
 
 	// Coupon generation
 	$start_time = microtime( true );
-	wccg_generate_coupons( $coupons_to_generate, $post_data );
+	
+	//Collecting return value: generated filename
+	$filename = wccg_generate_coupons( $coupons_to_generate, $post_data );
+	//wccg_generate_coupons( $coupons_to_generate, $post_data );
 	$execution_time = microtime( true ) - $start_time;
 
 	// Step
@@ -193,6 +230,11 @@ function wccg_ajax_process_batch_coupons() {
 	// Add message
 	$message .= sprintf( __( '%1$s coupons created in %2$s seconds', 'coupon-generator-for-woocommerce' ), $coupons_to_generate, round( $execution_time, 3 ) );
 
+	//Add link to file
+	$upload_dir = wp_upload_dir();	
+	$coupons_dirname = $upload_dir['baseurl'].'/coupon-generator';
+	$message .= '<br>Generated coupon codes: <a href="'.$coupons_dirname.'/'.$filename.'" target="_blank">'.$filename.'</a>';
+	
 	// Progress
 	$progress = round( $coupons_generated / $total_number_coupons * 100 );
 
