@@ -50,6 +50,13 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 										<pre class='wc-coupon-generator-progress-messages'></pre>
 									</div>
 
+									<div class="wc-coupon-generator-completed-actions" style="display: none;">
+										<a type="button" class="button button-secondary" href="<?php echo wp_nonce_url( admin_url( sprintf( '?action=wccg-export-coupons&quantity=%d', $_POST['number_of_coupons'] ) ), 'wccg-export-coupons' ); ?>">
+											<?php _e( 'Export as txt file', 'coupon-generator-for-woocommerce' ); ?>
+										</a>
+										<p class="description"><?php echo __( 'Export the last {{ couponGenerator.quantity }} coupons created', 'woocommerce-advanced-shipping' ); ?></p>
+									</div>
+
 									<script>
 									jQuery( document ).ready( function( $ ) {
 										WCCG_Generator.init();

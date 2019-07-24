@@ -70,16 +70,12 @@ class WCCG_Admin {
 		$current_screen = get_current_screen();
 
 		if ( 'woocommerce_page_woocommerce_coupon_generator' == $current_screen->id ) :
+			wp_enqueue_style( 'coupon-generator-for-woocommerce', plugins_url( 'assets/css/woocommerce-coupon-generator-admin.min.css', WooCommerce_Coupon_Generator()->file ), array(), WooCommerce_Coupon_Generator()->version );
 
-			$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-
-			wp_enqueue_style( 'coupon-generator-for-woocommerce', plugins_url( 'assets/css/woocommerce-coupon-generator-admin.css', WooCommerce_Coupon_Generator()->file ), array(), WooCommerce_Coupon_Generator()->version );
-
-			wp_enqueue_script( 'coupon-generator-for-woocommerce', plugins_url( 'assets/js/woocommerce-coupon-generator-admin.js', WooCommerce_Coupon_Generator()->file ), array( 'jquery' ), WooCommerce_Coupon_Generator()->version, true );
+			wp_enqueue_script( 'coupon-generator-for-woocommerce', plugins_url( 'assets/js/woocommerce-coupon-generator-admin.min.js', WooCommerce_Coupon_Generator()->file ), array( 'jquery' ), WooCommerce_Coupon_Generator()->version, true );
 
 			wp_enqueue_script( 'wc-admin-meta-boxes' );
 			wp_enqueue_script( 'wc-admin-coupon-meta-boxes' );
-
 		endif;
 
 	}

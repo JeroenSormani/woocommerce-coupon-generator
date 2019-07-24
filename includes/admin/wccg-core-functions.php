@@ -166,6 +166,10 @@ function wccg_ajax_process_batch_coupons() {
 		die( -1 );
 	endif;
 
+	if ( ! current_user_can( 'manage_woocommerce' ) ) {
+		return;
+	}
+
 	$progress   = 0;
 	$message    = '';
 	$batch_size = 500;
@@ -199,6 +203,42 @@ function wccg_ajax_process_batch_coupons() {
 	die( json_encode( array( 'step' => $batch_step, 'progress' => $progress, 'message' => $message ) ) );
 
 }
-
-
 add_action( 'wp_ajax_wccg_generate_coupons', 'wccg_ajax_process_batch_coupons' );
+
+
+/**
+ * Export coupon codes.
+ *
+ * Export the last x amount of coupon codes.
+ *
+ * @since NEWVERSION
+ */
+function wccg_export_coupons() {
+	if ( ! isset( $_GET['action'] ) || $_GET['action'] !== 'wccg-export-coupons' ) {
+		return;
+	}
+
+	if ( ! current_user_can( 'manage_woocommerce' ) ) {
+		return;
+	}
+
+	if ( ! wp_verify_nonce( $_GET['_wpnonce'], 'wccg-export-coupons' ) ) {
+		wp_die( __( 'This link is expired', 'coupon-generator-for-woocommerce' ) );
+	}
+
+	header( "Content-Disposition: attachment; filename=\"generated-coupons.txt\"" );
+	header( "Content-Type: text/plain" );
+
+	global $wpdb;
+
+	$quantity = absint( $_GET['quantity'] );
+	$results = $wpdb->get_results(
+		$wpdb->prepare( "SELECT post_title FROM $wpdb->posts WHERE post_type='shop_coupon' ORDER BY post_date DESC LIMIT 0, %d", $quantity )
+	);
+
+	$codes = wp_list_pluck( $results, 'post_title' );
+	echo implode( $codes, PHP_EOL );
+
+	die;
+}
+add_action( 'admin_init', 'wccg_export_coupons' );

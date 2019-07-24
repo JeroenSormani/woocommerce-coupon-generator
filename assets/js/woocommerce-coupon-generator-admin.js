@@ -20,7 +20,7 @@ var WCCG_Generator = {
 			}
 
 			if ( 'done' == response.step ) {
-				self.completed( self, response.total_coupons_generated, response.total_coupons_generated );
+				self.completed( self, parseInt(jQuery( '[name="number_of_coupons"]' ).val()), response.total_coupons_generated );
 			} else {
 				self.generate_coupons( response.step, self );
 			}
@@ -34,8 +34,13 @@ var WCCG_Generator = {
 		jQuery( '.wc-coupon-generator-progress-percentage' ).html( progress + '%' );
 		jQuery( '.inner-progress' ).css( 'width', jQuery( '.wc-coupon-generator-progress-bar' ).width() );
 	},
-	completed: function( self, coupons_genrated, execution_time ) {
+	completed: function( self, coupons_generated, execution_time ) {
 		jQuery( '.wc-coupon-generator-progress-bar + .spinner' ).remove();
+		jQuery( '.wc-coupon-generator-completed-actions' ).show();
+
+		var actions = jQuery('.wc-coupon-generator-completed-actions');
+			actions.show();
+			actions.html(actions.html().replace( /{{ couponGenerator.quantity }}/, coupons_generated ));
 	},
 	add_message: function( message ) {
 		jQuery( '.wc-coupon-generator-progress-messages' ).prepend( '<span class="wc-coupon-generator-progress-message">' + message + '</span><br/>' );
