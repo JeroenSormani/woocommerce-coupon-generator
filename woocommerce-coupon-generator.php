@@ -59,10 +59,7 @@ class WooCommerce_Coupon_Generator {
 	 * @since 1.0.0
 	 */
 	public function __construct() {
-
-		// Initialize plugin parts
 		$this->init();
-
 	}
 
 
@@ -76,13 +73,11 @@ class WooCommerce_Coupon_Generator {
 	 * @return object Instance of the class.
 	 */
 	public static function instance() {
-
-		if ( is_null( self::$instance ) ) :
+		if ( is_null( self::$instance ) ) {
 			self::$instance = new self();
-		endif;
+		}
 
 		return self::$instance;
-
 	}
 
 
@@ -96,30 +91,21 @@ class WooCommerce_Coupon_Generator {
 	public function init() {
 
 		// Check if WooCommerce is active
-		if ( ! function_exists( 'is_plugin_active_for_network' ) ) :
-			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
-		endif;
+		require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+		if ( ! is_plugin_active( 'woocommerce/woocommerce.php' ) && ! function_exists( 'WC' ) ) {
+			return;
+		}
 
-		if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) :
-			if ( ! is_plugin_active_for_network( 'woocommerce/woocommerce.php' ) ) :
-				return;
-			endif;
-		endif;
 
-		if ( is_admin() ) :
-
-			// Functions
+		if ( is_admin() ) {
 			require_once plugin_dir_path( __FILE__ ) . 'includes/admin/wccg-core-functions.php';
 
 			// Classes
 			require_once plugin_dir_path( __FILE__ ) . 'includes/admin/class-wccg-admin.php';
 			$this->admin = new WCCG_Admin();
+		}
 
-		endif;
-
-		// Load textdomain
 		$this->load_textdomain();
-
 	}
 
 
@@ -131,39 +117,29 @@ class WooCommerce_Coupon_Generator {
 	 * @since 1.0.0
 	 */
 	public function load_textdomain() {
-
-		$locale = apply_filters( 'plugin_locale', get_locale(), 'coupon-generator-for-woocommerce' );
-
-		// Load textdomain
-		load_textdomain( 'coupon-generator-for-woocommerce', WP_LANG_DIR . '/woocommerce-coupon-generator/woocommerce-coupon-generator-' . $locale . '.mo' );
 		load_plugin_textdomain( 'coupon-generator-for-woocommerce', false, basename( dirname( __FILE__ ) ) . '/languages' );
-
 	}
 
 
 }
 
 
-/**
- * The main function responsible for returning the WooCommerce_Coupon_Generator object.
- *
- * Use this function like you would a global variable, except without needing to declare the global.
- *
- * Example: <?php WooCommerce_Coupon_Generator()->method_name(); ?>
- *
- * @since 1.0.0
- *
- * @return object WooCommerce_Coupon_Generator class object.
- */
-if ( ! function_exists( 'WooCommerce_Coupon_Generator' ) ) :
+if ( ! function_exists( 'WooCommerce_Coupon_Generator' ) ) {
 
+	/**
+	 * The main function responsible for returning the WooCommerce_Coupon_Generator object.
+	 *
+	 * Use this function like you would a global variable, except without needing to declare the global.
+	 *
+	 * Example: <?php WooCommerce_Coupon_Generator()->method_name(); ?>
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return object WooCommerce_Coupon_Generator class object.
+	 */
 	function WooCommerce_Coupon_Generator() {
-
 		return WooCommerce_Coupon_Generator::instance();
-
 	}
-
-
-endif;
+}
 
 WooCommerce_Coupon_Generator();

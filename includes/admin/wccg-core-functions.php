@@ -20,9 +20,9 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function wccg_generate_coupons( $number, $args = array() ) {
 
 	// Verify required values
-	if ( ! isset( $args['number_of_coupons'] ) ) :
+	if ( ! isset( $args['number_of_coupons'] ) ) {
 		return;
-	endif;
+	}
 
 	// TODO default args
 
@@ -33,7 +33,7 @@ function wccg_generate_coupons( $number, $args = array() ) {
 
 	// Query coupons
 	$number_of_coupons = absint( $number );
-	for ( $i = 0; $i < $number_of_coupons; $i++ ) :
+	for ( $i = 0; $i < $number_of_coupons; $i++ ) {
 
 		$coupon_code = wccg_get_random_coupon();
 
@@ -66,8 +66,7 @@ function wccg_generate_coupons( $number, $args = array() ) {
 		// Set GUID
 // 			$wpdb->query( $wpdb->prepare( "UPDATE $wpdb->posts SET guid=%s WHERE ID=%d", get_permalink( $coupon_id ), $coupon_id ) ); // Slow
 		$wpdb->query( $wpdb->prepare( "UPDATE $wpdb->posts SET guid=%s WHERE ID=%d", esc_url_raw( add_query_arg( array( 'post_type' => 'shop_coupon', 'p' => $coupon_id ), home_url() ) ), $coupon_id ) ); // 10% faster -1 query per coupon
-
-	endfor;
+	}
 
 
 	// Add/Replace data to array
@@ -95,27 +94,24 @@ function wccg_generate_coupons( $number, $args = array() ) {
 
 	$insert_meta_values = '';
 	// Insert all coupons meta
-	foreach ( $meta_array as $key => $value ) :
+	foreach ( $meta_array as $key => $value ) {
 
-		foreach ( $insert_coupon_ids as $coupon_id ) :
+		foreach ( $insert_coupon_ids as $coupon_id ) {
 
 			$insert_meta_values .= $wpdb->prepare( '(%d, %s, %s)', $coupon_id, sanitize_title( wp_unslash( $key ) ), maybe_serialize( wp_unslash( $value ) ) );
 
 			$meta_array_keys = array_keys( $meta_array );
-			if ( $key == end( $meta_array_keys ) && $coupon_id == end( $insert_coupon_ids ) ) :
+			if ( $key == end( $meta_array_keys ) && $coupon_id == end( $insert_coupon_ids ) ) {
 				$insert_meta_values .= ';';
-			else :
+			} else {
 				$insert_meta_values .= ', ';
-			endif;
-
-		endforeach;
-
-	endforeach;
+			}
+		}
+	}
 
 	$wpdb->query( "INSERT INTO $wpdb->postmeta (post_id, meta_key, meta_value) VALUES $insert_meta_values" );
 
 	$wpdb->query( 'COMMIT' );
-
 }
 
 
@@ -136,9 +132,9 @@ function wccg_get_random_coupon() {
 	$charset       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 	$count         = strlen( $charset );
 
-	while ( $length-- ) :
+	while ( $length-- ) {
 		$random_coupon .= $charset[ mt_rand( 0, $count-1 ) ];
-	endwhile;
+	}
 
 	$random_coupon = implode( '-', str_split( strtoupper( $random_coupon ), 4 ) );
 
@@ -146,7 +142,6 @@ function wccg_get_random_coupon() {
 	$coupon_code = apply_filters( 'woocommerce_coupon_code', $random_coupon );
 
 	return $coupon_code;
-
 }
 
 
@@ -162,9 +157,9 @@ function wccg_ajax_process_batch_coupons() {
 
 	parse_str( $_POST['form_data'], $post_data );
 
-	if ( ! isset( $post_data['generate_coupons_nonce'] ) || ! wp_verify_nonce( $post_data['generate_coupons_nonce'], 'wccg_generate_coupons' ) ) :
+	if ( ! isset( $post_data['generate_coupons_nonce'] ) || ! wp_verify_nonce( $post_data['generate_coupons_nonce'], 'wccg_generate_coupons' ) ) {
 		die( -1 );
-	endif;
+	}
 
 	if ( ! current_user_can( 'manage_woocommerce' ) ) {
 		return;
@@ -187,12 +182,12 @@ function wccg_ajax_process_batch_coupons() {
 
 	// Step
 	$coupons_generated += $coupons_to_generate;
-	if ( $coupons_generated == $total_number_coupons ) :
+	if ( $coupons_generated == $total_number_coupons ) {
 		$batch_step  = 'done';
 		$message    .= '<strong>' . sprintf( __( 'Coupon generation completed! Created %1$d coupons.', 'coupon-generator-for-woocommerce' ), $coupons_generated ) . '</strong><br/>';
-	else :
+	} else {
 		++$batch_step;
-	endif;
+	}
 
 	// Add message
 	$message .= sprintf( __( '%1$s coupons created in %2$s seconds', 'coupon-generator-for-woocommerce' ), $coupons_to_generate, round( $execution_time, 3 ) );
@@ -201,7 +196,6 @@ function wccg_ajax_process_batch_coupons() {
 	$progress = round( $coupons_generated / $total_number_coupons * 100 );
 
 	die( json_encode( array( 'step' => $batch_step, 'progress' => $progress, 'message' => $message ) ) );
-
 }
 add_action( 'wp_ajax_wccg_generate_coupons', 'wccg_ajax_process_batch_coupons' );
 
