@@ -1,11 +1,11 @@
 <?php
 /**
  * Plugin Name: 	WooCommerce Coupon Generator
- * Plugin URI:		http://jeroensormani.com/
+ * Plugin URI:		https://jeroensormani.com/
  * Description:		Easily generate <strong>MILLIONS</strong> of unique coupons for your online store. Use all the coupon settings you are familiar with!
- * Version: 		1.0.1
+ * Version: 		1.1.0
  * Author: 			Jeroen Sormani
- * Author URI: 		http://jeroensormani.com/
+ * Author URI: 		https://jeroensormani.com/
  * Text Domain: 	coupon-generator-for-woocommerce
  */
 
@@ -29,7 +29,7 @@ class WooCommerce_Coupon_Generator {
 	 * @since 1.0.0
 	 * @var string $version Plugin version number.
 	 */
-	public $version = '1.0.1';
+	public $version = '1.1.0';
 
 
 	/**

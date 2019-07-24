@@ -205,7 +205,7 @@ add_action( 'wp_ajax_wccg_generate_coupons', 'wccg_ajax_process_batch_coupons' )
  *
  * Export the last x amount of coupon codes.
  *
- * @since NEWVERSION
+ * @since 1.1.0
  */
 function wccg_export_coupons() {
 	if ( ! isset( $_GET['action'] ) || $_GET['action'] !== 'wccg-export-coupons' ) {
