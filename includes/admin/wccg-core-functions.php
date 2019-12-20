@@ -138,6 +138,9 @@ function wccg_get_random_coupon() {
 
 	$random_coupon = implode( '-', str_split( strtoupper( $random_coupon ), 4 ) );
 
+	//allow modifying/prefixing/etc... generated codes 
+	$random_coupon = apply_filters( 'wccg_customize_random_coupon', $random_coupon );
+
 	// Ensure coupon code is correctly formatted
 	$coupon_code = apply_filters( 'woocommerce_coupon_code', $random_coupon );
 
