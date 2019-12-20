@@ -129,7 +129,7 @@ function wccg_get_random_coupon() {
 	// Generate unique coupon code
 	$random_coupon = '';
 	$length        = 12;
-	$charset       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	$charset       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 	$count         = strlen( $charset );
 
 	while ( $length-- ) {
