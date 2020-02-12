@@ -26,6 +26,15 @@ function wccg_generate_coupons( $number, $args = array() ) {
 
 	// TODO default args
 
+	// Coupon Generation Parameters
+	$options = apply_filters( 'woocommerce-coupon-generator-options-filter',
+		array( 'length' => 12,
+			'charset' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
+			'separator' => '-',
+			'segment-size' => 4,
+		)
+	);
+
 	global $wpdb;
 	$insert_coupon_ids = array();
 
@@ -35,7 +44,7 @@ function wccg_generate_coupons( $number, $args = array() ) {
 	$number_of_coupons = absint( $number );
 	for ( $i = 0; $i < $number_of_coupons; $i++ ) {
 
-		$coupon_code = wccg_get_random_coupon();
+		$coupon_code = wccg_get_random_coupon( $options );
 
 		// Insert coupon post
 		$wpdb->query( $wpdb->prepare( "INSERT INTO $wpdb->posts SET
@@ -124,19 +133,21 @@ function wccg_generate_coupons( $number, $args = array() ) {
  *
  * @return string Random coupon code.
  */
-function wccg_get_random_coupon() {
+function wccg_get_random_coupon( $options ) {
 
 	// Generate unique coupon code
 	$random_coupon = '';
-	$length        = 12;
-	$charset       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	$length        = $options['length'];
+	$charset       = $options['charset'];
+	$separator     = $options['separator'];
+	$segment_size  = $options['segment_size'];
 	$count         = strlen( $charset );
 
 	while ( $length-- ) {
 		$random_coupon .= $charset[ mt_rand( 0, $count-1 ) ];
 	}
 
-	$random_coupon = implode( '-', str_split( strtoupper( $random_coupon ), 4 ) );
+	$random_coupon = implode( '-', str_split( strtoupper( $random_coupon ), $segment_size ) );
 
 	// Ensure coupon code is correctly formatted
 	$coupon_code = apply_filters( 'woocommerce_coupon_code', $random_coupon );
