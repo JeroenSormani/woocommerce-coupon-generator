@@ -135,7 +135,7 @@ function wccg_generate_coupons( $number, $args = array() ) {
  *
  * @return string Random coupon code.
  */
-function wccg_get_random_coupon() {
+function wccg_get_random_coupon( $options ) {
 
 	// Generate unique coupon code
 	$random_coupon = '';
