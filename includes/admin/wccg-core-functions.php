@@ -91,22 +91,22 @@ function wccg_generate_coupons( $number, $args = array() ) {
 		'customer_email'             => array_filter( array_map( 'trim', explode( ',', wc_clean( $args['customer_email'] ) ) ) ),
 	);
 	// These are from optional other plugins like Subscriptions
-	if( !empty( $args['wcs_number_payments'] ) {
+	if( !empty( $args['wcs_number_payments'] ) ) {
 		$meta_array['_wcs_number_payments'] = absint( $args['wcs_number_payments'] );
 	}
-	if( !empty( $args['_wc_url_coupons_redirect_page'] ) {
+	if( !empty( $args['_wc_url_coupons_redirect_page'] ) ) {
 		$meta_array['_wc_url_coupons_redirect_page'] = absint( explode('|',$args['_wc_url_coupons_redirect_page'] )[1]);
 	}
-	if( !empty( $args['_wc_url_coupons_redirect_page_type'] {
+	if( !empty( $args['_wc_url_coupons_redirect_page_type'] ) ) {
 		$meta_array['_wc_url_coupons_redirect_page_type'] = wc_clean( $args['_wc_url_coupons_redirect_page_type'] );
 	}
-	if( !empty( $args['_wc_url_coupons_product_ids'] ) {
+	if( !empty( $args['_wc_url_coupons_product_ids'] ) ) {
 		$meta_array['_wc_url_coupons_product_ids'] = array_map( 'intval', $args['_wc_url_coupons_product_ids'] );
 	}
-	if( isset( $args['_wc_url_coupons_defer_apply'] ) {
+	if( isset( $args['_wc_url_coupons_defer_apply'] ) ) {
 		$meta_array['_wc_url_coupons_defer_apply'] = 'yes';
 	}
-	if( !empty( $args['_wc_url_coupons_unique_url'] ) {
+	if( !empty( $args['_wc_url_coupons_unique_url'] ) ) {
 		// _wc_url_coupons_unique_url - appending the generated coupon code to the user input so it is unique
         	$meta_array['_wc_url_coupons_unique_url'] = wc_clean( $args['_wc_url_coupons_unique_url'] ) . '-' . sanitize_title( $coupon_code );
 	}
