@@ -72,7 +72,7 @@ function wccg_generate_coupons( $number, $args = array() ) {
 	// Add/Replace data to array
 	$product_ids = isset( $args['product_ids'] ) ? (array) $args['product_ids'] : array();
 	$exclude_ids = isset( $args['exclude_product_ids'] ) ? (array) $args['exclude_product_ids'] : array();
-	$meta_array = apply_filters( 'woocommerce_coupon_generator_coupon_meta_data', array(
+	$meta_array = array(
 		'discount_type'              => empty( $args['discount_type'] ) ? 'fixed_cart' : wc_clean( $args['discount_type'] ),
 		'coupon_amount'              => wc_format_decimal( $args['coupon_amount'] ),
 		'individual_use'             => isset( $args['individual_use'] ) ? 'yes' : 'no',
@@ -89,8 +89,28 @@ function wccg_generate_coupons( $number, $args = array() ) {
 		'minimum_amount'             => wc_format_decimal( $args['minimum_amount'] ),
 		'maximum_amount'             => wc_format_decimal( $args['maximum_amount'] ),
 		'customer_email'             => array_filter( array_map( 'trim', explode( ',', wc_clean( $args['customer_email'] ) ) ) ),
-	), $coupon_id );
-
+	);
+	// These are from optional other plugins like Subscriptions
+	if( !empty( $args['wcs_number_payments'] ) {
+		$meta_array['_wcs_number_payments'] = absint( $args['wcs_number_payments'] );
+	}
+	if( !empty( $args['_wc_url_coupons_redirect_page'] ) {
+		$meta_array['_wc_url_coupons_redirect_page'] = absint( explode('|',$args['_wc_url_coupons_redirect_page'] )[1]);
+	}
+	if( !empty( $args['_wc_url_coupons_redirect_page_type'] {
+		$meta_array['_wc_url_coupons_redirect_page_type'] = wc_clean( $args['_wc_url_coupons_redirect_page_type'] );
+	}
+	if( !empty( $args['_wc_url_coupons_product_ids'] ) {
+		$meta_array['_wc_url_coupons_product_ids'] = array_map( 'intval', $args['_wc_url_coupons_product_ids'] );
+	}
+	if( isset( $args['_wc_url_coupons_defer_apply'] ) {
+		$meta_array['_wc_url_coupons_defer_apply'] = 'yes';
+	}
+	if( !empty( $args['_wc_url_coupons_unique_url'] ) {
+		// _wc_url_coupons_unique_url - appending the generated coupon code to the user input so it is unique
+        	$meta_array['_wc_url_coupons_unique_url'] = wc_clean( $args['_wc_url_coupons_unique_url'] ) . '-' . sanitize_title( $coupon_code );
+	}
+	$meta_array = apply_filters( 'woocommerce_coupon_generator_coupon_meta_data', $meta_array, $coupon_id );
 
 	$insert_meta_values = '';
 	// Insert all coupons meta
