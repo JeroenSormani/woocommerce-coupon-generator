@@ -46,7 +46,7 @@ function wccg_generate_coupons( $number, $args = array() ) {
 	$number_of_coupons = absint( $number );
 	for ( $i = 0; $i < $number_of_coupons; $i++ ) {
 
-		$coupon_code = wccg_get_random_coupon( $options );
+		$coupon_code = wccg_get_random_coupon();
 
 		// Insert coupon post
 		$wpdb->query( $wpdb->prepare( "INSERT INTO $wpdb->posts SET
@@ -100,6 +100,14 @@ function wccg_generate_coupons( $number, $args = array() ) {
 		'minimum_amount'             => wc_format_decimal( $args['minimum_amount'] ),
 		'maximum_amount'             => wc_format_decimal( $args['maximum_amount'] ),
 		'customer_email'             => array_filter( array_map( 'trim', explode( ',', wc_clean( $args['customer_email'] ) ) ) ),
+		// WooCommerce Subscriptions and other fields
+		'_wcs_number_payments'       => empty( $args['wcs_number_payments'] ) ? '' : absint( $args['wcs_number_payments'] ),
+		'_wc_url_coupons_redirect_page' => empty( $args['_wc_url_coupons_redirect_page'] ) ? '' : absint( explode('|',$args['_wc_url_coupons_redirect_page'] )[1]),
+		'_wc_url_coupons_redirect_page_type' => empty( $args['_wc_url_coupons_redirect_page_type'] ) ? '' : wc_clean( $args['_wc_url_coupons_redirect_page_type'] ),
+		'_wc_url_coupons_product_ids' => isset( $args['_wc_url_coupons_product_ids'] ) ? array_map( 'intval', $args['_wc_url_coupons_product_ids'] ) : array(),
+		'_wc_url_coupons_defer_apply' => isset( $args['_wc_url_coupons_defer_apply'] ) ? 'yes' : 'no',
+		// _wc_url_coupons_unique_url - appending the generated coupon code to the user input so it is unique
+		'_wc_url_coupons_unique_url'  => empty( $args['_wc_url_coupons_unique_url'] ) ? '' : wc_clean( $args['_wc_url_coupons_unique_url'] ) . '-' . sanitize_title( $coupon_code ),
 	), $coupon_id );
 
 
@@ -135,7 +143,7 @@ function wccg_generate_coupons( $number, $args = array() ) {
  *
  * @return string Random coupon code.
  */
-function wccg_get_random_coupon( $options ) {
+function wccg_get_random_coupon() {
 
 	// Generate unique coupon code
 	$random_coupon = '';
@@ -145,7 +153,7 @@ function wccg_get_random_coupon( $options ) {
 	$segment_size  = $options['segment_size'];
 	$prefix        = $options['prefix'];
 	$postfix       = $options['postfix'];
-	$count         = strlen( $charset );
+  $count         = strlen( $charset );
 
 	while ( $length-- ) {
 		$random_coupon .= $charset[ mt_rand( 0, $count-1 ) ];
