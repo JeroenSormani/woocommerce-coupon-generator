@@ -72,7 +72,7 @@ function wccg_generate_coupons( $number, $args = array() ) {
 	// Add/Replace data to array
 	$product_ids = isset( $args['product_ids'] ) ? (array) $args['product_ids'] : array();
 	$exclude_ids = isset( $args['exclude_product_ids'] ) ? (array) $args['exclude_product_ids'] : array();
-	$meta_array = apply_filters( 'woocommerce_coupon_generator_coupon_meta_data', array(
+	$meta_array = array(
 		'discount_type'              => empty( $args['discount_type'] ) ? 'fixed_cart' : wc_clean( $args['discount_type'] ),
 		'coupon_amount'              => wc_format_decimal( $args['coupon_amount'] ),
 		'individual_use'             => isset( $args['individual_use'] ) ? 'yes' : 'no',
