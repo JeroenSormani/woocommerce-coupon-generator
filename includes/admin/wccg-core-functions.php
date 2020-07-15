@@ -89,8 +89,12 @@ function wccg_generate_coupons( $number, $args = array() ) {
 		'minimum_amount'             => wc_format_decimal( $args['minimum_amount'] ),
 		'maximum_amount'             => wc_format_decimal( $args['maximum_amount'] ),
 		'customer_email'             => array_filter( array_map( 'trim', explode( ',', wc_clean( $args['customer_email'] ) ) ) ),
-	), $coupon_id );
+	);
 
+    // Allow custom fields to be added based on third-party coupon extensions
+    $meta_array = apply_filters( 'woocomerce_coupon_generator_coupon_extra_meta_data', $meta_array, $args, $coupon_id );
+
+    apply_filters( 'woocommerce_coupon_generator_coupon_meta_data', array(), $coupon_id );
 
 	$insert_meta_values = '';
 	// Insert all coupons meta
