@@ -20,6 +20,16 @@ class WCCG_Admin {
 	 * @since 1.0.0
 	 */
 	public function __construct() {
+
+		// Add generator page
+		add_action( 'admin_menu', array( $this, 'add_generator_page' ) );
+
+		// Enqueue scripts
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ), 20 );
+
+		// WooCommerce screen IDs
+		add_action( 'woocommerce_screen_ids', array( $this, 'add_wc_screen_id' ) );
+
 		add_action( 'init', array( $this, 'init' ) ); // Used init because admin_init is too late for admin_menu
 	}
 
@@ -34,15 +44,6 @@ class WCCG_Admin {
 	public function init() {
 
 		global $pagenow;
-
-		// Add generator page
-		add_action( 'admin_menu', array( $this, 'add_generator_page' ) );
-
-		// Enqueue scripts
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ), 20 );
-
-		// WooCommerce screen IDs
-		add_action( 'woocommerce_screen_ids', array( $this, 'add_wc_screen_id' ) );
 
 		// Plugins page
 		if ( 'plugins.php' == $pagenow ) {
@@ -62,13 +63,24 @@ class WCCG_Admin {
 	public function enqueue_scripts( $hook ) {
 		$current_screen = get_current_screen();
 
-		if ( 'woocommerce_page_woocommerce_coupon_generator' == $current_screen->id ) {
-			wp_enqueue_style( 'coupon-generator-for-woocommerce', plugins_url( 'assets/css/woocommerce-coupon-generator-admin.min.css', WooCommerce_Coupon_Generator()->file ), array(), WooCommerce_Coupon_Generator()->version );
+		if ( in_array( $current_screen->id, array( 'marketing_page_woocommerce_coupon_generator', 'woocommerce_page_woocommerce_coupon_generator' ) ) ) {
+			wp_enqueue_style( 'coupon-generator-for-woocommerce', plugins_url( 'assets/css/woocommerce-coupon-generator-admin.min.css', WooCommerce_Coupon_Generator()->file ), array( 'woocommerce_admin_styles' ), WooCommerce_Coupon_Generator()->version );
 
 			wp_enqueue_script( 'coupon-generator-for-woocommerce', plugins_url( 'assets/js/woocommerce-coupon-generator-admin.min.js', WooCommerce_Coupon_Generator()->file ), array( 'jquery' ), WooCommerce_Coupon_Generator()->version, true );
 
-			wp_enqueue_script( 'wc-admin-meta-boxes' );
-			wp_enqueue_script( 'wc-admin-coupon-meta-boxes' );
+			// Copied from WC Core; class-wc-admin-assets.php as this is only loaded on coupon pages
+			wp_enqueue_script( 'wc-admin-coupon-meta-boxes', WC()->plugin_url() . '/assets/js/admin/meta-boxes-coupon.min.js', array( 'wc-admin-meta-boxes' ), WC()->version );
+			wp_localize_script(
+				'wc-admin-coupon-meta-boxes',
+				'woocommerce_admin_meta_boxes_coupon',
+				array(
+					'generate_button_text' => esc_html__( 'Generate coupon code', 'woocommerce' ),
+					'characters'           => apply_filters( 'woocommerce_coupon_code_generator_characters', 'ABCDEFGHJKMNPQRSTUVWXYZ23456789' ),
+					'char_length'          => apply_filters( 'woocommerce_coupon_code_generator_character_length', 8 ),
+					'prefix'               => apply_filters( 'woocommerce_coupon_code_generator_prefix', '' ),
+					'suffix'               => apply_filters( 'woocommerce_coupon_code_generator_suffix', '' ),
+				)
+			);
 		}
 	}
 
@@ -81,7 +93,9 @@ class WCCG_Admin {
 	 * @since 1.0.0
 	 */
 	public function add_generator_page() {
-		add_submenu_page( 'woocommerce', __( 'WooCommerce Coupon Generator', 'coupon-generator-for-woocommerce' ), __( 'Coupon generator', 'coupon-generator-for-woocommerce' ), 'manage_woocommerce', 'woocommerce_coupon_generator', array( $this, 'coupon_generator_callback' ) );
+		global $admin_page_hooks;
+		$parent_menu = ( isset( $admin_page_hooks['woocommerce-marketing'] ) ) ? 'woocommerce-marketing' : 'woocommerce';
+		add_submenu_page( $parent_menu, __( 'WooCommerce Coupon Generator', 'coupon-generator-for-woocommerce' ), __( 'Coupon generator', 'coupon-generator-for-woocommerce' ), 'manage_woocommerce', 'woocommerce_coupon_generator', array( $this, 'coupon_generator_callback' ) );
 	}
 
 
