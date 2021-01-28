@@ -64,7 +64,6 @@ function wccg_generate_coupons( $number, $args = array() ) {
 		$coupon_id           = $wpdb->insert_id;
 
 		// Set GUID
-// 			$wpdb->query( $wpdb->prepare( "UPDATE $wpdb->posts SET guid=%s WHERE ID=%d", get_permalink( $coupon_id ), $coupon_id ) ); // Slow
 		$wpdb->query( $wpdb->prepare( "UPDATE $wpdb->posts SET guid=%s WHERE ID=%d", esc_url_raw( add_query_arg( array( 'post_type' => 'shop_coupon', 'p' => $coupon_id ), home_url() ) ), $coupon_id ) ); // 10% faster -1 query per coupon
 	}
 
@@ -89,7 +88,8 @@ function wccg_generate_coupons( $number, $args = array() ) {
 		'minimum_amount'             => wc_format_decimal( $args['minimum_amount'] ),
 		'maximum_amount'             => wc_format_decimal( $args['maximum_amount'] ),
 		'customer_email'             => array_filter( array_map( 'trim', explode( ',', wc_clean( $args['customer_email'] ) ) ) ),
-	), $coupon_id );
+		'usage_count'                => 0,
+	), $coupon_id = null ); // $coupon_id is deprecated as its not useful
 
 
 	$insert_meta_values = '';
@@ -138,10 +138,13 @@ function wccg_get_random_coupon() {
 
 	$random_coupon = implode( '-', str_split( strtoupper( $random_coupon ), 4 ) );
 
-	// Ensure coupon code is correctly formatted
+	// Ensure coupon code is correctly formatted with WC Core filter
 	$coupon_code = apply_filters( 'woocommerce_coupon_code', $random_coupon );
 
-	return $coupon_code;
+	// Additional filter that only executes for this plugin, not for other WC Core coupons
+	$random_code = apply_filters( 'woocommerce_coupon_generator_random_coupon_code', $coupon_code );
+
+	return $random_code;
 }
 
 
