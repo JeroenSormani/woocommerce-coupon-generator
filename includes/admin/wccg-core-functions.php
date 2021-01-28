@@ -15,7 +15,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * Generate the coupons based on the $args arguments.
  *
  * @since 1.0.0
- * TODO
  */
 function wccg_generate_coupons( $number, $args = array() ) {
 
@@ -23,8 +22,6 @@ function wccg_generate_coupons( $number, $args = array() ) {
 	if ( ! isset( $args['number_of_coupons'] ) ) {
 		return;
 	}
-
-	// TODO default args
 
 	global $wpdb;
 	$insert_coupon_ids = array();
@@ -43,6 +40,7 @@ function wccg_generate_coupons( $number, $args = array() ) {
 			post_date=%s,
 			post_date_gmt=%s,
 			post_title=%s,
+			post_excerpt=%s,
 			post_status='publish',
 			comment_status='closed',
 			ping_status='closed',
@@ -55,6 +53,7 @@ function wccg_generate_coupons( $number, $args = array() ) {
 			current_time( 'mysql' ),
 			current_time( 'mysql', 1 ),
 			sanitize_title( $coupon_code ),
+			sanitize_text_field( $args['excerpt'] ),
 			$coupon_code,
 			current_time( 'mysql' ),
 			current_time( 'mysql', 1 )

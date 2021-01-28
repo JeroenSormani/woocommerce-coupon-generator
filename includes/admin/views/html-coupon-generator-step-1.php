@@ -28,6 +28,14 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 		<form method='post' id='wc-coupon-generator' action='<?php echo esc_url( add_query_arg( 'step', 2 ) ); ?>'>
 			<div class='wc-coupon-generator-coupon-data' id='poststuff'>
 
+				<div id="post-body-content">
+
+					<div id="titlediv">
+						<div class="inside"></div>
+						<textarea id="woocommerce-coupon-description" name="excerpt" cols="5" rows="2" placeholder="<?php esc_attr_e( 'Description (optional)', 'woocommerce' ); ?>"></textarea>
+					</div>
+				</div>
+
 				<div id="postbox-container-2" class="postbox-container">
 					<div id="normal-sortables" class="meta-box-sortables ui-sortable">
 						<div id="woocommerce-coupon-data" class="postbox ">
