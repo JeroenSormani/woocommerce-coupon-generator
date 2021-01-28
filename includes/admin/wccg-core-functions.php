@@ -234,7 +234,7 @@ function wccg_export_coupons() {
 	);
 
 	$codes = wp_list_pluck( $results, 'post_title' );
-	echo implode( $codes, PHP_EOL );
+	echo implode( PHP_EOL, $codes );
 
 	die;
 }
