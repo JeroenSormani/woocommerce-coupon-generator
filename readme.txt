@@ -46,6 +46,13 @@ If you have a feature request, let me know, they're always welcome!
 
 == Changelog ==
 
+= 1.1.1 - 2021/01/28 =
+
+* [Add] - Description field
+* [Update] - Move the 'Coupon generator' submenu under 'Marketing' menu
+* [Fix] - Add 'usage_count' meta data
+* [Fix] - PHP 7.4+ warning when exporting coupons
+
 = 1.1.0 - 2019/07/24 =
 
 * [Add] - Export to .txt file functionality

@@ -1,6 +1,6 @@
 <?php
 /**
- * WC Coupong Generator core functions.
+ * WC Coupon Generator core functions.
  *
  * @author 		Jeroen Sormani
  * @since		1.0.0
