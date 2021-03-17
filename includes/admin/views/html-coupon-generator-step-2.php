@@ -44,6 +44,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 											<img class="help_tip" data-tip='<?php _e( 'Number of coupons to generate in this batch', 'coupon-generator-for-woocommerce' ); ?>' src="<?php echo WC()->plugin_url(); ?>/assets/images/help.png" height="16" width="16" />
 										</p>
 
+										<?php do_action( 'woocommerce_coupon_generator_coupon_options' ); ?>
+
 									</div><!-- .woocommerce_options_panel -->
 									<div class="clear"></div>
 								</div><!-- #coupon_options -->
