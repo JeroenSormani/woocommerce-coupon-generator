@@ -63,7 +63,7 @@ class WCCG_Admin {
 	public function enqueue_scripts( $hook ) {
 		$current_screen = get_current_screen();
 
-		if ( in_array( $current_screen->id, array( 'marketing_page_woocommerce_coupon_generator', 'woocommerce_page_woocommerce_coupon_generator' ) ) ) {
+		if ( strpos( $current_screen->id, 'woocommerce_coupon_generator' ) !== false ) {
 			wp_enqueue_style( 'coupon-generator-for-woocommerce', plugins_url( 'assets/css/woocommerce-coupon-generator-admin.min.css', WooCommerce_Coupon_Generator()->file ), array( 'woocommerce_admin_styles', 'jquery-ui-style' ), WooCommerce_Coupon_Generator()->version );
 
 			wp_enqueue_script( 'coupon-generator-for-woocommerce', plugins_url( 'assets/js/woocommerce-coupon-generator-admin.min.js', WooCommerce_Coupon_Generator()->file ), array( 'jquery' ), WooCommerce_Coupon_Generator()->version, true );
