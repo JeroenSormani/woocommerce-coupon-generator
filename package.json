@@ -1,21 +1,37 @@
 {
-  "name": "woocommerce-coupon-generator",
-  "version": "1.0.0",
-  "description": "",
-  "main": "gulpfile.js",
-  "devDependencies": {
-    "@babel/core": "^7.4.0",
-    "@babel/preset-env": "^7.4.2",
-    "browser-sync": "^2.26.3",
-    "gulp": "^4.0.0",
-    "gulp-babel": "^8.0.0",
-    "gulp-rename": "^1.4.0",
-    "gulp-sass": "^4.0.2",
-    "gulp-uglify": "^3.0.2"
-  },
-  "scripts": {
-    "watch": "gulp watch"
-  },
+  "title": "Coupon Generator for WooCommerce",
+  "name": "coupon-generator-for-woocommerce",
+  "domain": "coupon-generator-for-woocommerce",
+  "version": "2.0.0-beta-1",
+  "description": "Bulk generate generate millions of unique coupons for your online store.",
+  "main": "Gruntfile.js",
+  "license": "GPL-3.0",
   "author": "Jeroen Sormani",
-  "license": "GPL-2.0-or-later"
+  "scripts": {
+    "build:assets": "grunt assets"
+  },
+  "devDependencies": {
+    "autoprefixer": "9.8.6",
+    "eslint": "^7.24.0",
+    "grunt": "~1.4.0",
+    "grunt-contrib-clean": "^2.0.0",
+    "grunt-contrib-compress": "^2.0.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-cssmin": "^4.0.0",
+    "grunt-contrib-jshint": "~3.0.0",
+    "grunt-contrib-uglify": "~5.0.1",
+    "grunt-contrib-watch": "~1.1.0",
+    "grunt-newer": "~1.3.0",
+    "grunt-postcss": "^0.9.0",
+    "grunt-rtlcss": "^2.0.2",
+    "grunt-sass": "^3.1.0",
+    "grunt-text-replace": "^0.4.0",
+    "grunt-wp-i18n": "~1.0.3",
+    "grunt-wp-readme-to-markdown": "^2.0.1",
+    "gruntify-eslint": "^5.0.0",
+    "jshint-stylish": "~2.2.1",
+    "load-grunt-tasks": "~5.1.0",
+    "node-sass": "^5.0.0",
+    "postcss": "^8.2.12"
+  }
 }

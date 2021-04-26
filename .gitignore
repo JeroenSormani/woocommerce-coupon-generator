@@ -1,3 +1,5 @@
-.DS_Store
-gulpfile.js
+none
+node_modules/
+*.css
+*.min.js
 package-lock.json

@@ -66,7 +66,6 @@ function wccg_generate_coupons( $number, $args = array() ) {
 		$wpdb->query( $wpdb->prepare( "UPDATE $wpdb->posts SET guid=%s WHERE ID=%d", esc_url_raw( add_query_arg( array( 'post_type' => 'shop_coupon', 'p' => $coupon_id ), home_url() ) ), $coupon_id ) ); // 10% faster -1 query per coupon
 	}
 
-
 	// Add/Replace data to array
 	$product_ids = isset( $args['product_ids'] ) ? (array) $args['product_ids'] : array();
 	$exclude_ids = isset( $args['exclude_product_ids'] ) ? (array) $args['exclude_product_ids'] : array();
@@ -88,7 +87,7 @@ function wccg_generate_coupons( $number, $args = array() ) {
 		'maximum_amount'             => wc_format_decimal( $args['maximum_amount'] ),
 		'customer_email'             => array_filter( array_map( 'trim', explode( ',', wc_clean( $args['customer_email'] ) ) ) ),
 		'usage_count'                => 0,
-	), $coupon_id = null ); // $coupon_id is deprecated as its not useful
+	), $args );
 
 
 	$insert_meta_values = '';
@@ -175,7 +174,6 @@ function wccg_ajax_process_batch_coupons() {
 	$total_number_coupons = $post_data['number_of_coupons'];
 	$coupons_generated    = $batch_step * $batch_size;
 	$coupons_to_generate  = min( $total_number_coupons - $coupons_generated, $batch_size );
-
 
 	// Coupon generation
 	$start_time = microtime( true );

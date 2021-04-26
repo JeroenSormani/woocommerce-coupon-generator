@@ -12,59 +12,53 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  * @version		1.0.0
  */
 
-?><div class='wrap'>
+?><fieldset id="step-1">
 
-	<div class='wc-coupon-generator-wrap wc-coupon-generator-wrap-step-1'>
+	<div class='wc-coupon-generator-coupon-data' id='poststuff'>
 
-		<h2><?php _e( 'WooCommerce Coupon Generator', 'coupon-generator-for-woocommerce' ); ?></h2>
+		<div id="post-body-content">
 
-		<div class='steps'>
-			<span class='step step-0'><a href='<?php echo esc_url( remove_query_arg( 'step' ) ); ?>'><?php _e( '0. Introduction', 'coupon-generator-for-woocommerce' ); ?></a></span>
-			<span class='step step-1 active'><?php _e( '1. Coupon options', 'coupon-generator-for-woocommerce' ); ?></span>
-			<span class='step step-2'><?php _e( '2. Generator options', 'coupon-generator-for-woocommerce' ); ?></span>
-			<span class='step step-3'><?php _e( '3. Generating coupons', 'coupon-generator-for-woocommerce' ); ?></span>
+			<div id="titlediv">
+				<div class="inside"></div>
+				<textarea id="woocommerce-coupon-description" name="excerpt" cols="5" rows="2" placeholder="<?php esc_attr_e( 'Description (optional)', 'woocommerce' ); ?>"></textarea>
+			</div>
 		</div>
 
-		<form method='post' id='wc-coupon-generator' action='<?php echo esc_url( add_query_arg( 'step', 2 ) ); ?>'>
-			<div class='wc-coupon-generator-coupon-data' id='poststuff'>
+		<div id="postbox-container-2" class="postbox-container">
+			<div id="normal-sortables" class="meta-box-sortables ui-sortable">
+				<div id="woocommerce-coupon-data" class="postbox ">
+					<h3 class="hndle ui-sortable-handle"><span><?php _e( 'Coupon Data', 'woocommerce' ); ?></span></h3>
+					<div class="inside"><?php
 
-				<div id="post-body-content">
+						$temp_coupon = wp_insert_post( array(
+							'post_type'   => 'shop_coupon',
+							'post_status' => 'draft',
+							'post_title'  => 'temp_generator_coupon',
+						) );
+						global $thepostid;
+						$thepostid = $temp_coupon;
+						WC_Meta_Box_Coupon_Data::output( (object) array( 'ID' => null ) );
+						wp_delete_post( $temp_coupon, true );?>
 
-					<div id="titlediv">
-						<div class="inside"></div>
-						<textarea id="woocommerce-coupon-description" name="excerpt" cols="5" rows="2" placeholder="<?php esc_attr_e( 'Description (optional)', 'woocommerce' ); ?>"></textarea>
 					</div>
 				</div>
-
-				<div id="postbox-container-2" class="postbox-container">
-					<div id="normal-sortables" class="meta-box-sortables ui-sortable">
-						<div id="woocommerce-coupon-data" class="postbox ">
-							<h3 class="hndle ui-sortable-handle"><span><?php _e( 'Coupon Data', 'woocommerce' ); ?></span></h3>
-							<div class="inside"><?php
-
-								$temp_coupon = wp_insert_post( array(
-									'post_type'   => 'shop_coupon',
-									'post_status' => 'draft',
-									'post_title'  => 'temp_generator_coupon',
-								) );
-								global $thepostid;
-								$thepostid = $temp_coupon;
-								WC_Meta_Box_Coupon_Data::output( (object) array( 'ID' => null ) );
-								wp_delete_post( $temp_coupon, true );
-
-							?></div>
-						</div>
-					</div>
-				</div>
-				<div class='clear'></div>
-
-				<a href="javascript:void(0);" class="continue-button-wrap" onclick="document.getElementById('wc-coupon-generator').submit();">
-					<span class="continue-button"><?php _e( 'Continue to the next step', 'coupon-generator-for-woocommerce' ); ?></span>
-				</a>
-
 			</div>
-		</form>
+		</div>
+		<div class='clear'></div>
 
 	</div>
 
-</div>
+	<div id="wc-coupon-generator-coupon-error" class="inline error" style="display:none;"><ul></ul></div>
+
+	<div class="generate">
+
+		<label for="number_of_coupons"><?php _e( 'Number of coupons to generate', 'coupon-generator-for-woocommerce' ); ?></label>
+		<input type="number" min="1" autofocus class="short" style="width: 200px;" name="number_of_coupons" id="coupon_quantity" value="1" placeholder="10">
+
+		<button type="submit" class="next button button-primary button-large">
+			<span><?php _e( 'Generate', 'coupon-generator-for-woocommerce' ); ?></span>
+		</button>
+
+	</div>
+
+</fieldset>

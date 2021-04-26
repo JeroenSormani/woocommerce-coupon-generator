@@ -63,13 +63,25 @@ class WCCG_Admin {
 	public function enqueue_scripts( $hook ) {
 		$current_screen = get_current_screen();
 
-		if ( strpos( $current_screen->id, 'woocommerce_coupon_generator' ) !== false ) {
-			wp_enqueue_style( 'coupon-generator-for-woocommerce', plugins_url( 'assets/css/woocommerce-coupon-generator-admin.min.css', WooCommerce_Coupon_Generator()->file ), array( 'woocommerce_admin_styles', 'jquery-ui-style' ), WooCommerce_Coupon_Generator()->version );
+		if ( in_array( $current_screen->id, array( 'marketing_page_woocommerce_coupon_generator', 'woocommerce_page_woocommerce_coupon_generator' ) ) ) {
 
-			wp_enqueue_script( 'coupon-generator-for-woocommerce', plugins_url( 'assets/js/woocommerce-coupon-generator-admin.min.js', WooCommerce_Coupon_Generator()->file ), array( 'jquery' ), WooCommerce_Coupon_Generator()->version, true );
+			$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+
+			wp_enqueue_style( 'coupon-generator-for-woocommerce', plugins_url( 'assets/css/woocommerce-coupon-generator-admin' . $suffix . '.css', WooCommerce_Coupon_Generator()->file ), array( 'woocommerce_admin_styles', 'jquery-ui-style' ), WooCommerce_Coupon_Generator()->version );
+
+			wp_style_add_data( 'coupon-generator-for-woocommerce', 'rtl', 'replace' ); 		
+
+			wp_enqueue_script( 'coupon-generator-for-woocommerce', plugins_url( 'assets/js/woocommerce-coupon-generator-admin' . $suffix . '.js', WooCommerce_Coupon_Generator()->file ), array( 'jquery' ), WooCommerce_Coupon_Generator()->version, true );
+			wp_localize_script(
+				'coupon-generator-for-woocommerce',
+				'COUPON_GENERATOR_FOR_WOOCOMMERCE',
+				array(
+					'i18n_amount_error' => esc_html__( 'Please enter an amount before generating coupons.', 'coupon-generator-for-woocommerce' )
+				)
+			);
 
 			// Copied from WC Core; class-wc-admin-assets.php as this is only loaded on coupon pages
-			wp_enqueue_script( 'wc-admin-coupon-meta-boxes', WC()->plugin_url() . '/assets/js/admin/meta-boxes-coupon.min.js', array( 'wc-admin-meta-boxes' ), WC()->version );
+			wp_enqueue_script( 'wc-admin-coupon-meta-boxes', WC()->plugin_url() . '/assets/js/admin/meta-boxes-coupon' . $suffix . '.js', array( 'wc-admin-meta-boxes' ), WC_VERSION );
 			wp_localize_script(
 				'wc-admin-coupon-meta-boxes',
 				'woocommerce_admin_meta_boxes_coupon',
@@ -81,6 +93,7 @@ class WCCG_Admin {
 					'suffix'               => apply_filters( 'woocommerce_coupon_code_generator_suffix', '' ),
 				)
 			);
+			
 		}
 	}
 
@@ -111,7 +124,7 @@ class WCCG_Admin {
 		require_once plugin_dir_path( WooCommerce_Coupon_Generator()->file ) . 'includes/admin/class-wccg-generator.php';
 
 		$coupon_generator = new WCCG_Generator();
-		$coupon_generator->output_step();
+		$coupon_generator->output_form();
 	}
 
 

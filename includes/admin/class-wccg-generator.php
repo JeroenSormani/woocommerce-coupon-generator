@@ -30,19 +30,11 @@ class WCCG_Generator {
 	 */
 	public function __construct() {
 		$this->steps = array(
-			'0'	=> array(
-				'name'    => __( 'Introduction', 'coupon-generator-for-woocommerce' ),
-				'handler' => 'introduction_handler',
-			),
 			'1' => array(
 				'name'    => __( 'Coupon options', 'coupon-generator-for-woocommerce' ),
 				'handler' => 'coupon_options_handler',
 			),
 			'2' => array(
-				'name'    => __( 'Generator options', 'coupon-generator-for-woocommerce' ),
-				'handler' => 'generator_options_handler',
-			),
-			'3' => array(
 				'name'    => __( 'Generate coupons', 'coupon-generator-for-woocommerce' ),
 				'handler' => 'generate_coupons_handler',
 			),
@@ -56,6 +48,7 @@ class WCCG_Generator {
 	 * Get the current step number.
 	 *
 	 * @since 1.0.0
+	 * @deprecated 2.0.0 - Steps are handled async.
 	 *
 	 * @return int Step number.
 	 */
@@ -77,6 +70,7 @@ class WCCG_Generator {
 	 * handler as a callback.
 	 *
 	 * @since 1.0.0
+	 * @deprecated 2.0.0 - Steps are handled async.
 	 *
 	 * @param int $step Step to output. Leave empty to use the current step.
 	 */
@@ -107,11 +101,50 @@ class WCCG_Generator {
 
 	}
 
+	/**
+	 * Output form.
+	 *
+	 * Output the generator.
+	 *
+	 * @since 2.0.0
+	 */
+	public function output_form() { ?>
+
+		<div class="wrap wc-coupon-generator-wrap">
+
+			<h1><?php _e( 'WooCommerce Coupon Generator', 'coupon-generator-for-woocommerce' ); ?></h1>
+
+			<?php call_user_func( array( $this, 'introduction_handler' ) ); ?>
+
+			<form id='wc-coupon-generator-form'>
+
+				<?php
+
+				foreach ( $this->steps as $step => $data ) {
+
+					if ( is_callable( array( $this, $data['handler'] ) ) ) {
+						call_user_func( array( $this, $data['handler'] ) );
+					}
+
+				}
+
+				wp_nonce_field( 'wccg_generate_coupons', 'generate_coupons_nonce' );
+
+				?>
+
+			</form>
+
+		</div>
+
+		<?php
+
+	}
+
 
 	/**
 	 * Introduction handler.
 	 *
-	 * Handler to output the introduction page (step 0).
+	 * Handler to output the instructions page.
 	 *
 	 * @since 1.0.0
 	 */
@@ -138,14 +171,10 @@ class WCCG_Generator {
 	 * Handler to output the coupon generator options (step 2).
 	 *
 	 * @since 1.0.0
+	 * @deprecated 2.0.0 - Quantity input is shown on step 1.
 	 */
 	public function generator_options_handler() {
-		// Make sure values from the previous step are present
-		if ( ! isset( $_POST['coupon_amount'] ) ) {
-			return $this->output_step( 1 );
-		}
-
-		require_once 'views/html-coupon-generator-step-2.php';
+		_deprecated_function( __METHOD__, '2.0.0', 'This function is no longer used. Quantity input is shown on step 1.' );
 	}
 
 
@@ -157,12 +186,7 @@ class WCCG_Generator {
 	 * @since 1.0.0
 	 */
 	public function generate_coupons_handler() {
-		// Make sure values from the previous step are present
-		if ( ! isset( $_POST['coupon_amount'] ) || ! isset( $_POST['number_of_coupons'] ) ) {
-			return $this->output_step( 2 );
-		}
-
-		require_once 'views/html-coupon-generator-step-3.php';
+		require_once 'views/html-coupon-generator-step-2.php';
 	}
 
 
