@@ -88,7 +88,7 @@ function wccg_generate_coupons( $number, $args = array() ) {
 		'maximum_amount'             => wc_format_decimal( $args['maximum_amount'] ),
 		'customer_email'             => array_filter( array_map( 'trim', explode( ',', wc_clean( $args['customer_email'] ) ) ) ),
 		'usage_count'                => 0,
-	), $coupon_id = null ); // $coupon_id is deprecated as its not useful
+	), $coupon_id = null, $args ); // $coupon_id is deprecated as its not useful
 
 
 	$insert_meta_values = '';
