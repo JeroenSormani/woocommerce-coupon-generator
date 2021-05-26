@@ -2,8 +2,8 @@
 Contributors: sormano
 Tags: woocommerce coupon generator, woocommerce, woocommerce coupon, coupons, coupon importer, woocommerce automatic coupons, woocommerce random coupons
 Requires at least: 4.0.0
-Tested up to: 5.6
-Stable tag: 1.1.1
+Tested up to: 5.7
+Stable tag: 1.2.0
 Requires PHP: 5.6
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -45,6 +45,12 @@ If you have a feature request, let me know, they're always welcome!
 
 
 == Changelog ==
+
+= 1.2.0 - 2021/05/26 =
+
+* [Update] - Use JS for the steps; improves compatibility with multi-dimensional fields/data.
+* [Fix] - Scripts not loading for non-english languages
+* [Add] - 'woocommerce_coupon_generator_coupon_options' action to allow adding options
 
 = 1.1.1 - 2021/01/28 =
 
