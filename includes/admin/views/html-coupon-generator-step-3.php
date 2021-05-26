@@ -11,19 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  * @version		1.0.0
  */
 
-?><div class='wrap'>
-
-	<div class='wc-coupon-generator-wrap wc-coupon-generator-wrap-step-3'>
-
-		<h2><?php _e( 'WooCommerce Coupon Generator', 'coupon-generator-for-woocommerce' ); ?></h2>
-
-		<div class='steps'>
-			<span class='step step-0'><a href='<?php echo esc_url( remove_query_arg( 'step' ) ); ?>'><?php _e( '0. Introduction', 'coupon-generator-for-woocommerce' ); ?></a></span>
-			<span class='step step-1'><a href='<?php echo esc_url( add_query_arg( 'step', 1 ) ); ?>'><?php _e( '1. Coupon options', 'coupon-generator-for-woocommerce' ); ?></a></span>
-			<span class='step step-2'><?php _e( '2. Generator options', 'coupon-generator-for-woocommerce' ); ?></span>
-			<span class='step step-3 active'><?php _e( '3. Generating coupons', 'coupon-generator-for-woocommerce' ); ?></span>
-		</div>
-
+?>
+	<div class='wc-coupon-generator-wrap wc-coupon-generator-wrap-step-3 hidden'>
 		<div class='wc-coupon-generator-coupon-data' id='poststuff'>
 
 			<div id="postbox-container-2" class="postbox-container">
@@ -51,33 +40,11 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 									</div>
 
 									<div class="wc-coupon-generator-completed-actions" style="display: none;">
-										<a type="button" class="button button-secondary" href="<?php echo wp_nonce_url( admin_url( sprintf( '?action=wccg-export-coupons&quantity=%d', $_POST['number_of_coupons'] ) ), 'wccg-export-coupons' ); ?>">
+										<a type="button" class="button button-secondary" href="<?php echo wp_nonce_url( admin_url( '?action=wccg-export-coupons&quantity=' ), 'wccg-export-coupons' ); ?>">
 											<?php _e( 'Export as txt file', 'coupon-generator-for-woocommerce' ); ?>
 										</a>
 										<p class="description"><?php echo __( 'Export the last {{ couponGenerator.quantity }} coupons created', 'woocommerce-advanced-shipping' ); ?></p>
 									</div>
-
-									<script>
-									jQuery( document ).ready( function( $ ) {
-										WCCG_Generator.init();
-									} );
-									</script>
-
-									<form id='wc-coupon-generator-form'><?php
-										// Keep existing post values
-										foreach ( $_POST as $key => $val ) :
-
-											if ( is_array( $val ) ) :
-												foreach ( $val as $inner_val ) :
-													?><input type="hidden" name="<?php echo esc_attr( $key ); ?>[]" value="<?php echo esc_attr( $inner_val ); ?>" /><?php
-												endforeach;
-											else :
-												?><input type="hidden" name="<?php echo esc_attr( $key ); ?>" value="<?php echo esc_attr( $val ); ?>" /><?php
-											endif;
-
-										endforeach;
-									?></form>
-
 
 								</div><!-- .woocommerce_options_panel -->
 								<div class="clear"></div>
@@ -88,9 +55,4 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 				</div>
 			</div>
 		</div>
-
-		<div class='clear'></div>
-
 	</div>
-
-</div>

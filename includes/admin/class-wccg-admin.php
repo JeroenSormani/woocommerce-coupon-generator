@@ -108,10 +108,12 @@ class WCCG_Admin {
 	 * @since 1.0.0
 	 */
 	public function coupon_generator_callback() {
-		require_once plugin_dir_path( WooCommerce_Coupon_Generator()->file ) . 'includes/admin/class-wccg-generator.php';
-
-		$coupon_generator = new WCCG_Generator();
-		$coupon_generator->output_step();
+		?><div class="wrap wccg-wrap"><?php
+			require_once 'views/html-coupon-generator-step-0.php';
+			require_once 'views/html-coupon-generator-step-1.php';
+			require_once 'views/html-coupon-generator-step-2.php';
+			require_once 'views/html-coupon-generator-step-3.php';
+		?></div><?php
 	}
 
 

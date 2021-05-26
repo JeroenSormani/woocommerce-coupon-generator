@@ -12,18 +12,17 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  * @version		1.0.0
  */
 
-?><div class='wrap'>
+?>
+	<h2><?php _e( 'WooCommerce Coupon Generator', 'coupon-generator-for-woocommerce' ); ?></h2>
 
-	<div class='wc-coupon-generator-wrap wc-coupon-generator-wrap-step-0'>
+	<div class='steps'>
+		<span class='step step-0 active'><a href='<?php echo esc_url( remove_query_arg( 'step' ) ); ?>'><?php _e( '0. Introduction', 'coupon-generator-for-woocommerce' ); ?></a></span>
+		<span class='step step-1'><a href='<?php echo esc_url( add_query_arg( 'step', 1 ) ); ?>'><?php _e( '1. Coupon options', 'coupon-generator-for-woocommerce' ); ?></a></span>
+		<span class='step step-2'><?php _e( '2. Generator options', 'coupon-generator-for-woocommerce' ); ?></span>
+		<span class='step step-3'><?php _e( '3. Generating coupons', 'coupon-generator-for-woocommerce' ); ?></span>
+	</div>
 
-		<h2><?php _e( 'WooCommerce Coupon Generator', 'coupon-generator-for-woocommerce' ); ?></h2>
-
-		<div class='steps'>
-			<span class='step step-0 active'><a href='<?php echo esc_url( remove_query_arg( 'step' ) ); ?>'><?php _e( '0. Introduction', 'coupon-generator-for-woocommerce' ); ?></a></span>
-			<span class='step step-1'><a href='<?php echo esc_url( add_query_arg( 'step', 1 ) ); ?>'><?php _e( '1. Coupon options', 'coupon-generator-for-woocommerce' ); ?></a></span>
-			<span class='step step-2'><?php _e( '2. Generator options', 'coupon-generator-for-woocommerce' ); ?></span>
-			<span class='step step-3'><?php _e( '3. Generating coupons', 'coupon-generator-for-woocommerce' ); ?></span>
-		</div>
+	<div class='wc-coupon-generator-wrap wc-coupon-generator-wrap-step-0 active-step'>
 
 		<p><?php _e( 'Hi!', 'coupon-generator-for-woocommerce' ); ?></p>
 		<p><?php _e( 'Thank you for using WooCommerce Coupon Generator. To use the coupon generator you have to go through the following steps.', 'coupon-generator-for-woocommerce' ); ?>
@@ -45,10 +44,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 		</p>
 		<div class='clear'></div>
 
-		<a href="<?php echo esc_url( add_query_arg( 'step', 1 ) ); ?>" class="continue-button-wrap">
-			<span class="continue-button"><?php _e( 'Continue to the next step', 'coupon-generator-for-woocommerce' ); ?></span>
-		</a>
+		<div class="continue-button-wrap">
+			<a href="javascript:void(0);"  class="wccg-next"><?php _e( 'Continue to the next step', 'coupon-generator-for-woocommerce' ); ?></a>
+		</div>
 
 	</div>
-
-</div>

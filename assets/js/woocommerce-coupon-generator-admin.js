@@ -7,7 +7,7 @@ var WCCG_Generator = {
 
 		var data = {
 			'action': 		'wccg_generate_coupons',
-			'form_data': 	jQuery( '#wc-coupon-generator-form' ).serialize(),
+			'form_data': 	jQuery( '.wccg-wrap :input' ).serialize(),
 			'batch_step': 	batch_step
 		};
 
@@ -41,9 +41,28 @@ var WCCG_Generator = {
 		var actions = jQuery('.wc-coupon-generator-completed-actions');
 			actions.show();
 			actions.html(actions.html().replace( /{{ couponGenerator.quantity }}/, coupons_generated ));
+
+		var exportAnchor = actions.find('a');
+		exportAnchor.attr('href', exportAnchor.attr('href').replace('quantity', 'quantity=' + coupons_generated));
 	},
 	add_message: function( message ) {
 		jQuery( '.wc-coupon-generator-progress-messages' ).prepend( '<span class="wc-coupon-generator-progress-message">' + message + '</span><br/>' );
 	}
 
 };
+
+(function($) {
+	$('.wccg-next').on('click', function (e) {
+		var activeStep = $('.active-step');
+		var nextStep = activeStep.next();
+
+		activeStep.removeClass('active-step').addClass('hidden');
+		nextStep.removeClass('hidden').addClass('active-step');
+
+		$('.step.active').removeClass('active').next().addClass('active');
+	});
+
+	$('.wccg-start').on('click', function (e) {
+		WCCG_Generator.init();
+	});
+})(jQuery);
