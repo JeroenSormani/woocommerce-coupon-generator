@@ -229,7 +229,7 @@ function wccg_export_coupons() {
 
 	$quantity = absint( $_GET['quantity'] );
 	$results = $wpdb->get_results(
-		$wpdb->prepare( "SELECT post_title FROM $wpdb->posts WHERE post_type='shop_coupon' ORDER BY post_date DESC LIMIT 0, %d", $quantity )
+		$wpdb->prepare( "SELECT post_title FROM $wpdb->posts WHERE post_type='shop_coupon' AND post_status='publish' ORDER BY post_date DESC LIMIT 0, %d", $quantity )
 	);
 
 	$codes = wp_list_pluck( $results, 'post_title' );
