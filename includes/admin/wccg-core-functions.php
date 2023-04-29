@@ -124,24 +124,27 @@ function wccg_generate_coupons( $number, $args = array() ) {
  * @return string Random coupon code.
  */
 function wccg_get_random_coupon() {
+	global $wpdb;
 
 	// Generate unique coupon code
-	$random_coupon = '';
-	$length        = 12;
-	$charset       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-	$count         = strlen( $charset );
+	do {
+		$random_coupon = '';
+		$length        = 12;
+		$charset       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+		$count         = strlen( $charset );
 
-	while ( $length-- ) {
-		$random_coupon .= $charset[ mt_rand( 0, $count-1 ) ];
-	}
+		while ( $length-- ) {
+			$random_coupon .= $charset[ mt_rand( 0, $count-1 ) ];
+		}
 
-	$random_coupon = implode( '-', str_split( strtoupper( $random_coupon ), 4 ) );
+		$random_coupon = implode( '-', str_split( strtoupper( $random_coupon ), 4 ) );
 
-	// Ensure coupon code is correctly formatted with WC Core filter
-	$coupon_code = apply_filters( 'woocommerce_coupon_code', $random_coupon );
+		// Ensure coupon code is correctly formatted with WC Core filter
+		$coupon_code = apply_filters( 'woocommerce_coupon_code', $random_coupon );
 
-	// Additional filter that only executes for this plugin, not for other WC Core coupons
-	$random_code = apply_filters( 'woocommerce_coupon_generator_random_coupon_code', $coupon_code );
+		// Additional filter that only executes for this plugin, not for other WC Core coupons
+		$random_code = apply_filters( 'woocommerce_coupon_generator_random_coupon_code', $coupon_code );
+	} while( $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_name = %s AND post_type = 'shop_coupon' AND post_status = 'publish' LIMIT 1", $random_code ) ) );
 
 	return $random_code;
 }
