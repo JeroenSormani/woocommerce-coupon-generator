@@ -1,0 +1,58 @@
+/** RTL Support */
+html[dir="rtl"] {
+  .steps {
+    direction: rtl;
+    .step {
+      margin-right: 0;
+      margin-left: 20px;
+
+      &:after {
+        float: left;
+        margin: -10px 0 -10px -40px;
+        border-left: none;
+        border-right: 20px solid #8b8e94;
+      }
+      &:before {
+        float: right;
+        margin: -10px -40px -10px 0;
+        border-left: none;
+        border-right: 20px solid rgba(0, 0, 0, 0);
+        border-top: 20px solid #8b8e94;
+        border-bottom: 20px solid #8b8e94;
+      }
+      &.active:after {
+        border-right-color: #e33a3d;
+      }
+      &.active:before {
+        border-top-color: #e33a3d;
+        border-bottom-color: #e33a3d;
+      }
+    }
+    .step.step-0 {
+      margin-right: 0;
+      margin-left: 30px;
+    }
+  }
+
+  .wc-coupon-generator-wrap {
+    .continue-button-wrap {
+      float: left;
+      .wccg-next {
+        margin-right: 0;
+        margin-left: 20px;
+        &:after {
+          float: left;
+          margin: -10px 0 0 -49px;
+          border-left: none;
+          border-right: 19px solid #e33a3d;
+        }
+        &:before {
+          float: right;
+          margin: -10px -49px 0 0;
+          border-left: none;
+          border-right: 19px solid rgba(0, 0, 0, 0);
+        }
+      }
+    }
+  }
+}
