@@ -30,6 +30,12 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 										<img class="help_tip" data-tip='<?php _e( 'Number of coupons to generate in this batch', 'coupon-generator-for-woocommerce' ); ?>' src="<?php echo WC()->plugin_url(); ?>/assets/images/help.png" height="16" width="16" />
 									</p>
 
+									<p class="form-field coupon_code_prefix">
+										<label for="coupon_code_prefix"><?php _e( 'Coupon code prefix', 'coupon-generator-for-woocommerce' ); ?></label>
+										<input type="text" class="short" style="width: 200px;" name="coupon_code_prefix" id="coupon_code_prefix" value="" placeholder="<?php esc_attr_e( 'e.g. CORSO', 'coupon-generator-for-woocommerce' ); ?>">
+										<img class="help_tip" data-tip='<?php _e( 'Optional prefix to add at the beginning of all generated coupon codes (e.g. CORSO-ABCD-EFGH-IJKL). Leave empty for no prefix.', 'coupon-generator-for-woocommerce' ); ?>' src="<?php echo WC()->plugin_url(); ?>/assets/images/help.png" height="16" width="16" />
+									</p>
+
 									<?php do_action( 'woocommerce_coupon_generator_coupon_options' ); ?>
 
 								</div><!-- .woocommerce_options_panel -->

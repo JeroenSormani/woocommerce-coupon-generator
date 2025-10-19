@@ -30,9 +30,11 @@ function wccg_generate_coupons( $number, $args = array() ) {
 
 	// Query coupons
 	$number_of_coupons = absint( $number );
+	$coupon_prefix     = isset( $args['coupon_code_prefix'] ) ? sanitize_text_field( $args['coupon_code_prefix'] ) : '';
+	
 	for ( $i = 0; $i < $number_of_coupons; $i++ ) {
 
-		$coupon_code = wccg_get_random_coupon();
+		$coupon_code = wccg_get_random_coupon( $coupon_prefix );
 
 		// Insert coupon post
 		$wpdb->query( $wpdb->prepare( "INSERT INTO $wpdb->posts SET
@@ -123,9 +125,10 @@ function wccg_generate_coupons( $number, $args = array() ) {
  *
  * @since 1.0.0
  *
+ * @param string $prefix Optional prefix to add at the beginning of the coupon code.
  * @return string Random coupon code.
  */
-function wccg_get_random_coupon() {
+function wccg_get_random_coupon( $prefix = '' ) {
 
 	// Generate unique coupon code
 	$random_coupon = '';
@@ -138,6 +141,12 @@ function wccg_get_random_coupon() {
 	}
 
 	$random_coupon = implode( '-', str_split( strtoupper( $random_coupon ), 4 ) );
+
+	// Add prefix if provided
+	if ( ! empty( $prefix ) ) {
+		$prefix = strtoupper( sanitize_text_field( $prefix ) );
+		$random_coupon = $prefix . '-' . $random_coupon;
+	}
 
 	// Ensure coupon code is correctly formatted with WC Core filter
 	$coupon_code = apply_filters( 'woocommerce_coupon_code', $random_coupon );
